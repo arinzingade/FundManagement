@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Office</title>
+    <link rel="stylesheet" href="static/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class = "main">
+        <div class = "admin-title">
+            <h2 class = "title"> Back Office </h2>
+        </div>
+        <div class="admin-input">
+            <div class = "final-form">
+                <form method="POST" action="{{ url_for('admin') }}" class = "admin-form">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group">
+                        <label for="adminName">Admin Name</label>
+                        <input type="text" name="adminName" class="form-control" id="adminName" placeholder="Enter username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminPass">Admin Password</label>
+                        <input type="password" name="adminPass" class="form-control" id="adminPass" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    </div>
+</body>
+</html>

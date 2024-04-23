@@ -1,0 +1,139 @@
+
+body {
+    background-color: #101010;
+}
+
+.container {
+    display: grid;
+    height: 96vh;
+    grid-template-columns: 1fr 1.5fr 2.5fr;
+    grid-template-rows: 1fr 7fr 1fr;
+    grid-template-areas: 
+    "nav nav nav"
+    "sidebar Investor-Update Reports"
+    "footer footer footer";
+    grid-gap: 2%;
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5%;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 15% 27%;
+}
+
+.Investor-Update{
+    grid-area: Investor-Update;
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 12px;
+    padding: 15px 15px;
+}
+
+.Reports{
+    grid-area: Reports;
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 12px;
+    padding: 15px 15px;
+
+}
+
+footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding: 0px 5.3%;
+}
+
+.logo,
+.investment-title,
+.username,
+.Investor-Update,
+.Reports {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-decoration: none;
+}
+
+.investment-title {
+    font-weight: 300;
+}
+
+.Investor-Update, .Reports {
+    font-weight: 350;
+}
+
+.sidebar a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 350;
+}
+.logout-div a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 350;
+}
+
+.investment-title {
+    font-weight: 450;
+}
+
+.sidebar a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    padding: 4% 4%;
+    border-radius: 10px;
+    font-weight: 600;
+    padding-right: 19%;
+    width: fit-content;
+}
+
+.sidebar a:active {
+    box-shadow: 0 0 0 2px rgb(189, 188, 188);
+}
+
+.logout-div {
+    margin-right: 90%;
+    display: flex;
+    justify-content: left;
+}
+
+.logout-div a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 17% 17%;
+
+}
+
+.logout-div a:active {
+    box-shadow: 0 0 0 2px rgb(189, 188, 188);
+}
+
+a.News{
+    background: linear-gradient(to left, #272140, #200A43);
+    padding: 4% 4%;
+    border-radius: 10px;
+    font-weight: 550;
+    width: fit-content;
+    padding-right: 19%;
+}
+

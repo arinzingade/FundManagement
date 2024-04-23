@@ -1,0 +1,150 @@
+/* Default styles */
+
+body {
+    background: linear-gradient(to left, #200A43, #272140)
+}
+
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-title {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 250;
+    font-style: normal;
+    color: #dedede;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 45%;
+    padding: 20px 20px;
+    border-radius: 24px;
+    background: linear-gradient(to left, #14062b, #14121A);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form-group-username,
+.form-group-password {
+    font-family: "Sora", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 16px;
+    margin: 15px;
+}
+
+label {
+    display: block;
+    font-family: "Sora", sans-serif;
+    font-weight: 400;
+    color: #dedede;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 250px;
+    border-radius: 5px;
+    opacity: 70%;
+    border: none;
+    padding: 10px;
+}
+
+.error-message {
+    color: red;
+}
+
+.welcome {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 250;
+    font-style: normal;
+    color: #dedede;
+    font-size: 45px;
+    margin-bottom: 45%;
+}
+
+.back {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.alert {
+    padding: 10px;
+    margin: 20px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+}
+
+.alert-success {
+    background-color: #155724;
+    border-color: #f5c6cb;
+    color: #dedede;
+    font-family: "Sora", sans-serif;
+    font-weight: 250;
+}
+
+.alert-danger {
+    background-color: #740808;
+    border-color: #f5c6cb;
+    color: #dedede;
+    font-family: "Sora", sans-serif;
+    font-weight: 250;
+}
+
+.logo {
+    width: 20%;
+    position: absolute;
+    left: 40%;
+    top : -5%;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-button {
+    background-color: #000000;
+    font-family: "Sora", sans-serif;
+    font-weight: 200px;
+    color: #dedede;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.submit-button:hover {
+    background-color: #320404;
+}
+
+/* Active/focus effect */
+.submit-button:active,
+.submit-button:focus {
+    outline: none;
+    background-color: #310202;
+    box-shadow: 0 0 0 1px rgb(189, 188, 188);
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 80%; 
+    }
+}

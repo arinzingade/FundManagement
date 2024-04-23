@@ -1,0 +1,37 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Investor Relations</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='iR.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class = "container">
+            <nav> 
+                <a href = "/" class = "logo"> Zingade <br> Holdings </a> 
+                <p class = "investment-title"> Investment <br> Dashboard </p>
+                <a href = "/account" class = "username"> {{username_dash}} </a>
+            </nav>
+            <div class = "sidebar"> 
+                <a href = "/dashboard/portfolio" class = "portfolio">Portfolio</a>
+                <a href = "/dashboard//HedgeFund" class = "HedgeFund">Hedge Fund</a>
+                <a href = "/dashboard/transactions" class = "Transactions">Transactions</a>
+                <a href = "/dashboard/InvestorRelations" class = "News">Disclosures</a>
+                <a href = "/dashboard/Account" class = "Account">Account</a>
+                <a href = "/dashboard/settings" class = "settings">Settings</a>
+            </div>
+            <div class = "Investor-Update"> Investor Update </div>
+            <div class = "Reports"> Reports & Declarations </div>  
+            <footer> 
+                <div class = "logout-div">
+                    <a href = "/" class = "logout"> LogOut </a>
+                </div>
+            </footer>
+        </div>
+    </body>
+    </html>

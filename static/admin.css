@@ -1,0 +1,103 @@
+
+
+body {
+    background: linear-gradient(to left, #200A43, #272140)
+}
+
+.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    font-family: "Sora", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 175;
+    font-style: normal;
+    color: #dedede;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-input {
+    width: 45%;
+    padding: 30px;
+    border-radius: 24px;
+    background: linear-gradient(to left, #14062b, #14121A);
+    font-family: "Sora", sans-serif;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.form-group{
+    font-family: "Sora", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 16px;
+    margin: 15px 15px;
+    color: #dedede;
+}
+
+
+.final-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 9%;
+}
+
+input[type="text"],
+input[type="password"] {
+    margin : 10px 10px;
+    width: 250px;
+    border-radius: 5px;
+    opacity: 70%;
+    border: none;
+    padding: 10px;
+}
+
+.alert {
+    padding: 10px;
+    margin: 25px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+}
+
+.alert-danger {
+    background-color: #740808;
+    border-color: #f5c6cb;
+    color: #dedede;
+    font-family: "Sora", sans-serif;
+    font-weight: 350;
+}
+
+.button {
+    background-color: #000000;
+    font-family: "Sora", sans-serif;
+    font-weight: 200px;
+    color: #dedede;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    margin-left: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.button:hover {
+    background-color: #320404;
+}
+
+.button:active,
+.button:focus {
+    outline: none;
+    background-color: #310202;
+    box-shadow: 0 0 0 1px rgb(189, 188, 188);
+}
