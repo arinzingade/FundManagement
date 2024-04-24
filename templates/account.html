@@ -28,11 +28,44 @@
         </div>
         <div class = "sub-container">
             <div class = "nav-statement">
-                Transaction Statement
+                <div class = "heading-1"> Transaction Statement </div>
+                <div class = "total_shares">
+                    <a href = "/" class = "shares">
+                        <span class = "sub-heads"> Number of Shares</span><br>
+                        <span style = "font-size: 175%"> QTY {{ total_shares }}</span>
+                    </a>
+                    <a href = "/" class = "with-balance">
+                        <span class = "sub-heads">Withdrawable Balance</span><br>
+                        <span style = "font-size: 175%"> ₹ {{ total_shares }} </span>
+                    </a>
+                    <a href = "/" class = "avg-nav">
+                        <span class = "sub-heads">Average NAV Price</span><br>
+                        <span style = "font-size: 175%"> ₹ {{ weighted_price }} </span>
+                    </a>
+                </div>
+                <div class = "report-1-link">
+                    <a href = "/"> View Detailed NAV Report </a>
+                </div>
             </div>
-
             <div class = "settlement-statement">
-                Settlement Statement
+                <div class = "heading-1"> Settlement Cycle </div>
+                <div class = "total_shares">
+                    <a href = "/" class = "shares">
+                        <span class = "sub-heads">Settled Amount</span><br>
+                        <span style = "font-size: 175%"> ₹ {{ total_shares }} </span>
+                    </a>
+                    <a href = "/" class = "with-balance">
+                        <span class = "sub-heads">Unsettled Amount</span><br>
+                        <span style = "font-size: 175%"> ₹ {{ total_shares }} </span>
+                    </a>
+                    <a href = "/" class = "avg-nav">
+                        <span class = "sub-heads">Actual Returns</span><br>
+                        <span style = "font-size: 175%"> {{ total_shares }} %</span>
+                    </a>
+                </div>
+                <div class = "report-1-link">
+                    <a href = "/"> View Detailed Settlement Report </a>
+                </div>
             </div>
         </div>
 

@@ -39,6 +39,7 @@ nav {
     font-size: 1rem;
     text-decoration: none;
     font-weight: 350;
+   
 }
 
 .sidebar a:hover {
@@ -48,6 +49,7 @@ nav {
     font-weight: 600;
     padding-right: 19%;
     width: fit-content;
+    transition: 0.2s;
 }
 
 .sidebar a:active {
@@ -80,6 +82,9 @@ a.Account {
     padding-left: 1%;
     background: linear-gradient(to left, #272140, #200A43);
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .settlement-statement{
@@ -88,6 +93,9 @@ a.Account {
     padding-left: 1%;
     background: linear-gradient(to left, #272140, #200A43);
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .logo, .investment-title, 
@@ -96,7 +104,6 @@ a.Account {
     font-style: normal;
     color: #dedede;
     font-size: 1.5rem;
-    text-decoration: none;
     text-decoration: none;
 }
 
@@ -114,6 +121,7 @@ a.Account {
     border-radius: 10px;
     font-weight: 600;
     padding: 17% 17%;
+    transition: 0.2s;
 
 }
 
@@ -126,3 +134,72 @@ a.Account {
     padding: 0 27%;
 }
 
+
+.report-1-link{
+    width: fit-content;
+    background: linear-gradient(to right, #180F3D, #09070D);
+    border-radius: 12px;
+    font-size: 82%;
+    font-weight: 350;
+    padding: 0.5% 0.5%;
+    display: flex;
+    margin-right: 20%;
+}
+
+.report-1-link, .nav-statement a, .settlement-statement a {
+    text-decoration: none;
+    color: #dedede;
+}
+
+.sub-heads{
+    font-size: 75%;
+    font-weight: 250;
+}
+
+.shares, .with-balance, .avg-nav{
+    border-radius: 20px;
+    padding-bottom: 5%;
+}
+
+.shares:hover, .with-balance:hover, .avg-nav:hover{
+    transition: 0.4s;
+    background: linear-gradient(to right, #180F3D, #09070D);
+    border-radius: 20px;
+    padding: 5% 5%;
+    transition-delay: 0.01s;
+    font-weight: 525;
+}
+
+.report-1-link:hover {
+    transition: 0.4s;
+    background: linear-gradient(to left, #180F3D, #09070D);    
+}
+
+.total_shares{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "shares with-balance avg-nav";
+    grid-gap: 5%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.shares{
+    grid-area: shares;
+    
+}
+
+.with-balance{
+    grid-area: with-balance;
+}
+
+.avg-nav{
+    grid-area: avg-nav;
+}
+
+.heading-1{
+    font-size: 1.7rem;
+    margin-top: -1.2%;
+}

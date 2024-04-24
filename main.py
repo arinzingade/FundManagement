@@ -1,9 +1,10 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, request, make_response
-from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm
+from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm
 from pymongo import MongoClient, DESCENDING
 from dashboard import create_dash_app
 import bcrypt
 from datetime import datetime
+import numpy as np
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -90,6 +91,7 @@ def logout():
 @appFlask.route('/admin', methods = ['GET', 'POST'])
 def admin():
     adminForm = AdminForm()
+    
     if adminForm.validate_on_submit():
         adminUser = adminForm.adminName.data
         adminPass = adminForm.adminPass.data
@@ -136,6 +138,7 @@ def fund_update():
 @appFlask.route('/panel/clientUpdate', methods = ['GET', 'POST'])
 def client_update():   
     transForm = TransactionForm()
+    navform = navForm()
     if transForm.validate_on_submit():
         
         client = transForm.client.data
@@ -162,8 +165,29 @@ def client_update():
     else:
         print("Form validation failed:", transForm.errors) 
 
+    if navform.validate_on_submit():
+        date = navform.date.data
+        date_to_insert = datetime(date.year, date.month, date.day)
+        date = date_to_insert.strftime("%Y-%m-%d")
+        client = navform.client.data
+        type = navform.type.data
+        price = navform.price.data
+        shares = navform.shares.data
         
-    return render_template('clientUpdate.html', form=transForm)
+        try:
+            nav_info.insert_one({
+                'date': date,
+                'client': client,
+                'type': type,
+                'price': price,
+                'shares': shares,
+                'amount': round(price * shares,2)
+            })
+            flash("Transaction Information added successfully!", 'success')
+        except Exception as e:
+            flash(f"Error inserting data into MongoDB: {e}", 'error')
+        
+    return render_template('clientUpdate.html', transForm=transForm, navform = navform)
 
 # Dashboard
 @appFlask.route('/dashboard')
@@ -205,12 +229,22 @@ def hedgeFund():
 @appFlask.route('/dashboard/settings')
 def settings():
     return render_template("settings.html")
+    
 
 @appFlask.route('/dashboard/Account')
 def account():
     user_account = request.cookies.get('username')
-    print(user_account)
-    return render_template('account.html', user_account = user_account)
+    total_shares = 0
+    for doc in nav_info.find({'client' : user_account}):
+        total_shares += doc['shares']  
+    
+    weighted_price = 0
+    for doc in nav_info.find({'client' : user_account}):
+        weighted_price += doc['shares']*doc['price']
+    
+    weighted_price /= total_shares
+    return render_template('account.html', user_account = user_account, total_shares = total_shares,
+                                            weighted_price = round(weighted_price,2))
 
 # Run the Flask App
 if __name__ == '__main__':

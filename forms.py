@@ -51,3 +51,13 @@ class TransactionForm(FlaskForm):
     credit = FloatField('Credit')
     submit = SubmitField('Submit')
 
+class navForm(FlaskForm):
+    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    
+    date = DateField('Date', validators=[DataRequired()])
+    client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
+    type = SelectField('Type', choices = [('BUY', 'BUY'), ('SELL', 'SELL')], validators=[DataRequired()])
+    price = FloatField('price', validators=[DataRequired()])
+    shares = FloatField('shares', validators=[DataRequired()])
+    submit = SubmitField('submit')
+

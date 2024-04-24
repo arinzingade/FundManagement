@@ -6,29 +6,61 @@
         <title>Client Update</title>
     </head>
     <body>
-        <h2> This is Client Update Page </h2>
+        <h2> This is for Transaction </h2>
         <form method="POST">
-            {{ form.hidden_tag() }}
+            {{ transForm.hidden_tag() }}
             <div>
-                {{ form.date.label }} {{ form.date()}}
+                {{ transForm.date.label }} {{ transForm.date()}}
             </div>
             <div>
-                {{ form.client.label }} {{ form.client()}}
+                {{ transForm.client.label }} {{ transForm.client()}}
             </div>
             <div>
-                {{ form.particular.label }} {{ form.particular() }}
+                {{ transForm.particular.label }} {{ transForm.particular() }}
             </div>
             <div>
-                {{ form.type.label }} {{ form.type() }}
+                {{ transForm.type.label }} {{ transForm.type() }}
             </div>
             <div>
-                {{ form.debit.label }} {{ form.debit(size=10) }}
+                {{ transForm.debit.label }} {{ transForm.debit(size=10) }}
             </div>
             <div>
-                {{ form.credit.label }} {{ form.credit(size=10) }}
+                {{ transForm.credit.label }} {{ transForm.credit(size=10) }}
             </div>
             <div>
-                {{ form.submit }}
+                {{ transForm.submit }}
+            </div>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+        <h2> This is for NAV Allotment </h2>
+        <form method="POST">
+            {{ navform.hidden_tag() }}
+            <div>
+                {{ navform.date.label }} {{ navform.date()}}
+            </div>
+            <div>
+                {{ navform.client.label }} {{ navform.client()}}
+            </div>
+            <div>
+                {{ navform.type.label }} {{ navform.type() }}
+            </div>
+            <div>
+                {{ navform.price.label }} {{ navform.price() }}
+            </div>
+            <div>
+                {{ navform.shares.label }} {{ navform.shares() }}
+            </div>
+            <div>
+                {{ navform.submit }}
             </div>
         </form>
         {% with messages = get_flashed_messages(with_categories=true) %}

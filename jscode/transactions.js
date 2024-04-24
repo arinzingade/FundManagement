@@ -1,2 +1,6 @@
+document.addEventListener('DOMContentLoaded', function() {
 
-console.log("Hello Worlds")
+    setTimeout(function() {
+        document.body.classList.add('loaded');
+    }, 100);
+});
