@@ -4,7 +4,6 @@ from pymongo import MongoClient, DESCENDING
 from dashboard import create_dash_app
 import bcrypt
 from datetime import datetime
-import plotly.express as px
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
