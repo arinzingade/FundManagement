@@ -1,0 +1,128 @@
+
+body {
+    background-color: #101010;
+}
+
+
+.container {
+    display: grid;
+    height: 96vh;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 7fr 1fr;
+    grid-template-areas: 
+    "nav nav"
+    "sidebar sub-container"
+    "footer sub-container";
+    grid-gap: 2%;
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5%; 
+}
+
+.sidebar {
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 15% 27%;
+}
+
+.sidebar a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 350;
+}
+
+.sidebar a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    padding: 4% 4%;
+    border-radius: 10px;
+    font-weight: 600;
+    padding-right: 19%;
+    width: fit-content;
+}
+
+.sidebar a:active {
+    box-shadow: 0 0 0 2px rgb(189, 188, 188);
+}
+
+a.Account {
+    background: linear-gradient(to left, #272140, #200A43);
+    width:min-content;
+    padding: 4% 4%;
+    border-radius: 10px;
+    font-weight: 550;
+    padding-right: 19%;
+}
+
+.sub-container {
+    grid-area: sub-container;
+    display: grid;
+    grid-template-rows: 5fr 5fr;
+    grid-template-areas: 
+    "nav nav"
+    "settlement settlement";
+    grid-gap: 5%;
+    margin-bottom: 1%;
+}
+
+.nav-statement{
+    grid-area: nav;
+    padding-top: 1%;
+    padding-left: 1%;
+    background: linear-gradient(to left, #272140, #200A43);
+    border-radius: 15px;
+}
+
+.settlement-statement{
+    grid-area: settlement;
+    padding-top: 1%;
+    padding-left: 1%;
+    background: linear-gradient(to left, #272140, #200A43);
+    border-radius: 15px;
+}
+
+.logo, .investment-title, 
+.username, .heading, .balance, .settlement-statement, .nav-statement {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-decoration: none;
+}
+
+.logout-div a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 350;
+}
+
+.logout-div a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 17% 17%;
+
+}
+
+.footer{
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 27%;
+}
+

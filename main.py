@@ -16,6 +16,8 @@ users_collection = db['users']
 office_collection = db['office']
 fund_info = db['fund']
 transaction_info = db['transactions']
+nav_info = db['nav']
+settle_info = db['settle']
 
 existing_doc = office_collection.find_one({'username': 'eagles007'})
 if existing_doc is None:
@@ -206,7 +208,9 @@ def settings():
 
 @appFlask.route('/dashboard/Account')
 def account():
-    return render_template('account.html')
+    user_account = request.cookies.get('username')
+    print(user_account)
+    return render_template('account.html', user_account = user_account)
 
 # Run the Flask App
 if __name__ == '__main__':
