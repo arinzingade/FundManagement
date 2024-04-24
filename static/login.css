@@ -25,13 +25,16 @@ body {
 }
 
 .container {
-    width: 45%;
-    padding: 20px 20px;
+    width: fit-content;
     border-radius: 24px;
     background: linear-gradient(to left, #14062b, #14121A);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 5%;
+    padding-right: 10%;
 }
 
 .form-group-username,
@@ -40,7 +43,7 @@ body {
     font-weight: 300;
     font-style: normal;
     font-size: 16px;
-    margin: 15px;
+    padding: 5% 5%;
 }
 
 label {
@@ -48,6 +51,7 @@ label {
     font-family: "Sora", sans-serif;
     font-weight: 400;
     color: #dedede;
+    margin-bottom: 3%;
 }
 
 input[type="text"],
@@ -69,8 +73,7 @@ input[type="password"] {
     font-weight: 250;
     font-style: normal;
     color: #dedede;
-    font-size: 45px;
-    margin-bottom: 45%;
+    font-size: 300%;
 }
 
 .back {
@@ -118,30 +121,37 @@ input[type="password"] {
 }
 
 .submit-button {
-    background-color: #000000;
+    background: linear-gradient(to right, #3d0f0f, #0d0707);
     font-family: "Sora", sans-serif;
-    font-weight: 200px;
+    font-weight: 600;
+    font-size: 0.95rem;
     color: #dedede;
     border: none;
-    padding: 10px 20px;
+    padding: 30% 260%;
     border-radius: 9px;
     cursor: pointer;
+    margin-left: 30%;
+    margin-right: 50%;
+    margin-top: 20%;
 }
 
 /* Hover effect */
 .submit-button:hover {
-    background-color: #320404;
+    background: linear-gradient(to left, #3d0f0f, #0d0707);
+    transition: 0.2s;
 }
 
 /* Active/focus effect */
 .submit-button:active,
 .submit-button:focus {
     outline: none;
-    background-color: #310202;
-    box-shadow: 0 0 0 1px rgb(189, 188, 188);
+    background-color: #350101;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.299);
 }
 
-
+.welcome-cont{
+    margin-right: 10%;
+}
 
 @media only screen and (max-width: 768px) {
     .container {

@@ -58,6 +58,6 @@ class navForm(FlaskForm):
     client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
     type = SelectField('Type', choices = [('BUY', 'BUY'), ('SELL', 'SELL')], validators=[DataRequired()])
     price = FloatField('price', validators=[DataRequired()])
-    shares = FloatField('shares', validators=[DataRequired()])
+    amount = FloatField('amount', validators=[DataRequired()])
     submit = SubmitField('submit')
 

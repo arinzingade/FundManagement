@@ -172,7 +172,7 @@ def client_update():
         client = navform.client.data
         type = navform.type.data
         price = navform.price.data
-        shares = navform.shares.data
+        amount = navform.amount.data
         
         try:
             nav_info.insert_one({
@@ -180,9 +180,10 @@ def client_update():
                 'client': client,
                 'type': type,
                 'price': price,
-                'shares': shares,
-                'amount': round(price * shares,2)
+                'amount': amount,
+                'shares': round(amount / price, 2)
             })
+            
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'error')
@@ -235,15 +236,35 @@ def settings():
 def account():
     user_account = request.cookies.get('username')
     total_shares = 0
-    for doc in nav_info.find({'client' : user_account}):
-        total_shares += doc['shares']  
-    
     weighted_price = 0
-    for doc in nav_info.find({'client' : user_account}):
-        weighted_price += doc['shares']*doc['price']
     
-    weighted_price /= total_shares
-    return render_template('account.html', user_account = user_account, total_shares = total_shares,
+       
+    if (nav_info.count_documents({'client': user_account}) == 0):
+        print(nav_info.count_documents({'username': user_account}))
+        print('fail')
+        return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
+                                            weighted_price = round(weighted_price,2))
+    
+    else: 
+        for doc in nav_info.find({'client' : user_account}):
+            
+            if doc['type'] == 'BUY':
+                total_shares += doc['shares']  
+            elif doc['type'] == 'SELL':
+                total_shares -= doc['shares']  
+                print(total_shares)
+        
+        for doc in nav_info.find({'client' : user_account}):
+            if doc['type'] == 'BUY':
+                weighted_price += doc['shares']*doc['price']
+            elif doc['type'] == 'SELL':
+                weighted_price -= doc['shares']*doc['price']
+            print(weighted_price)
+    
+        weighted_price /= total_shares
+    
+    
+    return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2))
 
 # Run the Flask App
