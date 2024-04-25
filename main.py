@@ -27,6 +27,7 @@ if existing_doc is None:
         'password': bcrypt.hashpw(b'TheRouge@01', bcrypt.gensalt())
     })
 
+
 # Flask Routes
 @appFlask.route('/')
 def landing():
@@ -181,7 +182,11 @@ def client_update():
                 'type': type,
                 'price': price,
                 'amount': amount,
-                'shares': round(amount / price, 2)
+                'shares': round(amount / price, 2),
+                'profit': 0,
+                'returns': 0,
+                'settled': 0,
+                'unsettled': 0
             })
             
             flash("Transaction Information added successfully!", 'success')
@@ -231,13 +236,21 @@ def hedgeFund():
 def settings():
     return render_template("settings.html")
     
-
 @appFlask.route('/dashboard/Account')
 def account():
     user_account = request.cookies.get('username')
     total_shares = 0
     weighted_price = 0
+    unsettel = 0
+    withdraw = 0
+    settel = 0
     
+    latest_doc = db.fund.find_one(sort = [('date', -1)])
+    if latest_doc:
+        latest_nav = latest_doc['nav']
+    else:
+        latest_nav = 0
+
        
     if (nav_info.count_documents({'client': user_account}) == 0):
         print(nav_info.count_documents({'username': user_account}))
@@ -250,22 +263,42 @@ def account():
             
             if doc['type'] == 'BUY':
                 total_shares += doc['shares']  
-            elif doc['type'] == 'SELL':
-                total_shares -= doc['shares']  
-                print(total_shares)
-        
-        for doc in nav_info.find({'client' : user_account}):
-            if doc['type'] == 'BUY':
                 weighted_price += doc['shares']*doc['price']
             elif doc['type'] == 'SELL':
-                weighted_price -= doc['shares']*doc['price']
-            print(weighted_price)
-    
+                total_shares -= doc['shares'] 
+                weighted_price -= doc['shares']*doc['price'] 
+                
+            sh = doc['shares']
+            purPrice = doc['price']
+            currPrice = latest_nav
+            
+            profit = (currPrice - purPrice) * sh
+            ret = ((currPrice / purPrice) - 1)
+            
+            nav_info.update_one(
+                {'_id':doc['_id']},
+                {'$set':{'profit':profit, 'returns': round(ret*100,2)}}
+            )
+        
+        for doc in nav_info.find({'client' : user_account}):
+            profit_one = doc['profit']
+            unsettel += profit_one
+        
+            settel = doc['settled']
+            nav_info.update_one(
+                {'_id':doc['_id']},
+                {'$set':{'unsettled': unsettel - settel}}
+            )
+            
+            withdraw += profit_one
+        
+        withdraw += settel
         weighted_price /= total_shares
-    
-    
+        print(latest_nav)
+            
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
-                                            weighted_price = round(weighted_price,2))
+                                            weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
+                                            withdraw = round(withdraw, 2))
 
 # Run the Flask App
 if __name__ == '__main__':

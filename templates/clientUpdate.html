@@ -3,12 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Client Update</title>
     </head>
-    <body>
+    <body> 
+        
         <h2> This is for Transaction </h2>
-        <form method="POST">
-            {{ transForm.hidden_tag() }}
+        <form method = "POST">
+        {{ transForm.hidden_tag() }}
             <div>
                 {{ transForm.date.label }} {{ transForm.date()}}
             </div>
@@ -72,5 +72,9 @@
             {% endfor %}
         {% endif %}
         {% endwith %}
+        <br>
+        <p id = "myPara"> This is a demo Paragraph </p>
+        <button type = "button" onclick = "funcClick()"> Settle All Accounts </button>
+        <script src = "RougeWeb/script/client.js"></script>
     </body>
     </html>
