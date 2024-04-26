@@ -59,5 +59,10 @@ class navForm(FlaskForm):
     type = SelectField('Type', choices = [('BUY', 'BUY'), ('SELL', 'SELL')], validators=[DataRequired()])
     price = FloatField('price', validators=[DataRequired()])
     amount = FloatField('amount', validators=[DataRequired()])
-    submit = SubmitField('submit')
+    submit = SubmitField('submit')    
+
+class settleForm(FlaskForm):
+    
+    settle_confirm = StringField('Type "Settle All Accounts" ', validators=[DataRequired()])
+    submit = SubmitField('Settle All Accounts')
 

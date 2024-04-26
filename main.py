@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, request, make_response
-from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm
+from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
 from pymongo import MongoClient, DESCENDING
 from dashboard import create_dash_app
 import bcrypt
@@ -140,6 +140,8 @@ def fund_update():
 def client_update():   
     transForm = TransactionForm()
     navform = navForm()
+    setForm = settleForm()
+    
     if transForm.validate_on_submit():
         
         client = transForm.client.data
@@ -192,8 +194,23 @@ def client_update():
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'error')
-        
-    return render_template('clientUpdate.html', transForm=transForm, navform = navform)
+  
+    if setForm.validate_on_submit():
+        message_form = setForm.settle_confirm.data
+        if (message_form == "Settle All Accounts"):
+            unset = 0
+            for doc in nav_info.find():
+                unset = doc['unsettled']
+                already_set = doc['settled'] 
+                nav_info.update_one({'_id' : doc['_id']}, {'$set' : {'settled':already_set + unset, 'unsettled' : 0}})
+            
+            flash("All Accounts Settled")
+            
+        else:
+            flash("Try Again")
+    
+
+    return render_template('clientUpdate.html', transForm=transForm, navform = navform, settleForm = setForm)
 
 # Dashboard
 @appFlask.route('/dashboard')
@@ -256,7 +273,8 @@ def account():
         print(nav_info.count_documents({'username': user_account}))
         print('fail')
         return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
-                                            weighted_price = round(weighted_price,2))
+                                            weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
+                                            withdraw = round(withdraw, 2), setteled = round(settel, 2))
     
     else: 
         for doc in nav_info.find({'client' : user_account}):
@@ -281,24 +299,27 @@ def account():
             )
         
         for doc in nav_info.find({'client' : user_account}):
-            profit_one = doc['profit']
-            unsettel += profit_one
-        
-            settel = doc['settled']
-            nav_info.update_one(
+            settled_amount = doc['settled']
+            ideal_unset = (latest_nav - doc['price'])*doc['shares']
+            real_unset = ideal_unset - settled_amount
+            
+            nav_info.update_one (
                 {'_id':doc['_id']},
-                {'$set':{'unsettled': unsettel - settel}}
+                {'$set':{'unsettled' : real_unset}}
             )
-            
-            withdraw += profit_one
         
-        withdraw += settel
+        for doc in nav_info.find({'client' : user_account}):
+            unsettel += doc['unsettled']
+            settel += doc['settled']
+            withdraw += (doc['settled'] + doc['amount'])
+        
         weighted_price /= total_shares
-        print(latest_nav)
-            
+        
+        
+     
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
-                                            withdraw = round(withdraw, 2))
+                                            withdraw = round(withdraw, 2), setteled = round(settel, 2))
 
 # Run the Flask App
 if __name__ == '__main__':
