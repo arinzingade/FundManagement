@@ -141,6 +141,9 @@ def client_update():
     transForm = TransactionForm()
     navform = navForm()
     setForm = settleForm()
+    latest_doc = db.fund.find_one(sort = [('date', -1)])
+    latest_nav = latest_doc['nav']
+        
     
     if transForm.validate_on_submit():
         
@@ -177,6 +180,12 @@ def client_update():
         price = navform.price.data
         amount = navform.amount.data
         
+        if type == 'SELL':
+            shares = -1* round(amount / price, 2) 
+            amount = -1* amount 
+        else:
+            shares = round(amount / price, 2)
+   
         try:
             nav_info.insert_one({
                 'date': date,
@@ -184,11 +193,12 @@ def client_update():
                 'type': type,
                 'price': price,
                 'amount': amount,
-                'shares': round(amount / price, 2),
+                'shares': shares,
                 'profit': 0,
                 'returns': 0,
                 'settled': 0,
-                'unsettled': 0
+                'unsettled': 0,
+                'last_nav_settled': price
             })
             
             flash("Transaction Information added successfully!", 'success')
@@ -198,14 +208,19 @@ def client_update():
     if setForm.validate_on_submit():
         message_form = setForm.settle_confirm.data
         if (message_form == "Settle All Accounts"):
-            unset = 0
+            
             for doc in nav_info.find():
-                unset = doc['unsettled']
-                already_set = doc['settled'] 
-                nav_info.update_one({'_id' : doc['_id']}, 
-                                    {'$set' : {'settled' : already_set + unset, 'unsettled' : 0}})
-                
-            flash("All Accounts Settled", 'success')
+                settled = doc['settled'] + doc['unsettled']
+                nav_info.update_one(
+                    {"_id": doc['_id']},
+                    {'$set': {
+                        'settled': settled,
+                        'unsettled': 0,
+                        'last_nav_settled': latest_nav
+                    }}
+                )
+            
+            flash("All Accounts Settled Successfully", 'success')
             
         else:
             flash("Try Again", 'error')
@@ -244,11 +259,13 @@ def transactions():
 
 @appFlask.route('/dashboard/portfolio')
 def portfolio():
-    return render_template('portfolio.html')
+    user_account = request.cookies.get('username')
+    return render_template("portfolio.html", user_account = user_account)
 
 @appFlask.route('/dashboard/HedgeFund')
 def hedgeFund():
-    return render_template("hedgeFund.html")
+    user_account = request.cookies.get('username')
+    return render_template("hedgeFund.html", user_account = user_account)
 
 @appFlask.route('/dashboard/settings')
 def settings():
@@ -280,12 +297,37 @@ def account():
     else: 
         for doc in nav_info.find({'client' : user_account}):
             
-            if doc['type'] == 'BUY':
-                total_shares += doc['shares']  
-                weighted_price += doc['shares']*doc['price']
-            elif doc['type'] == 'SELL':
-                total_shares -= doc['shares'] 
-                weighted_price -= doc['shares']*doc['price']     
+        
+            total_shares += doc['shares']  
+            weighted_price += doc['shares']*doc['price']
+   
+                
+        for doc in nav_info.find({'client' : user_account}):
+            
+            profit = (latest_nav - doc['price'])*(doc['shares'])
+            returns = ((latest_nav - doc['price']) / doc['price'])*100
+            unsettel_for = (latest_nav - doc['last_nav_settled']) * doc['shares']
+                
+                
+            nav_info.update_many(
+                {'_id' : doc['_id']},
+                {
+                    '$set': {
+                        'profit': profit,
+                        'returns' : returns,
+                        'unsettled' : unsettel_for
+                    }
+                }
+                
+            )
+        for doc in nav_info.find({'client' : user_account}):
+            unsettel += doc['unsettled']
+            settel += doc['settled']
+            withdraw += doc['amount']
+        
+        weighted_price /= total_shares
+        withdraw += settel
+        
         
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
