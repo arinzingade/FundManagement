@@ -202,12 +202,13 @@ def client_update():
             for doc in nav_info.find():
                 unset = doc['unsettled']
                 already_set = doc['settled'] 
-                nav_info.update_one({'_id' : doc['_id']}, {'$set' : {'settled':already_set + unset, 'unsettled' : 0}})
-            
-            flash("All Accounts Settled")
+                nav_info.update_one({'_id' : doc['_id']}, 
+                                    {'$set' : {'settled' : already_set + unset, 'unsettled' : 0}})
+                
+            flash("All Accounts Settled", 'success')
             
         else:
-            flash("Try Again")
+            flash("Try Again", 'error')
     
 
     return render_template('clientUpdate.html', transForm=transForm, navform = navform, settleForm = setForm)
@@ -284,43 +285,11 @@ def account():
                 weighted_price += doc['shares']*doc['price']
             elif doc['type'] == 'SELL':
                 total_shares -= doc['shares'] 
-                weighted_price -= doc['shares']*doc['price'] 
-                
-            sh = doc['shares']
-            purPrice = doc['price']
-            currPrice = latest_nav
-            
-            profit = (currPrice - purPrice) * sh
-            ret = ((currPrice / purPrice) - 1)
-            
-            nav_info.update_one(
-                {'_id':doc['_id']},
-                {'$set':{'profit':profit, 'returns': round(ret*100,2)}}
-            )
+                weighted_price -= doc['shares']*doc['price']     
         
-        for doc in nav_info.find({'client' : user_account}):
-            settled_amount = doc['settled']
-            ideal_unset = (latest_nav - doc['price'])*doc['shares']
-            real_unset = ideal_unset - settled_amount
-            
-            nav_info.update_one (
-                {'_id':doc['_id']},
-                {'$set':{'unsettled' : real_unset}}
-            )
-        
-        for doc in nav_info.find({'client' : user_account}):
-            unsettel += doc['unsettled']
-            settel += doc['settled']
-            withdraw += (doc['settled'] + doc['amount'])
-        
-        weighted_price /= total_shares
-        
-        
-     
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2))
 
-# Run the Flask App
 if __name__ == '__main__':
     appFlask.run(debug=True)
