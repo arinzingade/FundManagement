@@ -66,3 +66,7 @@ class settleForm(FlaskForm):
     settle_confirm = StringField('Type "Settle All Accounts" ', validators=[DataRequired()])
     submit = SubmitField('Settle All Accounts')
 
+class DailyPnL(FlaskForm):
+    
+    date = DateField('Date', validators = [DataRequired()])
+    realised = FloatField('Realised', validators=[DataRequired()])

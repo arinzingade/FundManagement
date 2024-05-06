@@ -10,8 +10,8 @@ body {
     grid-template-rows: 1fr 7fr 1fr;
     grid-template-areas: 
     "nav nav"
-    "sidebar sub-container"
-    "footer sub-container";
+    "sidebar chart"
+    "footer chart";
     grid-gap: 2%;
 }
 
@@ -98,4 +98,12 @@ a.HedgeFund {
     padding: 17% 17%;
     transition: 0.2s;
 
+}
+
+.chart {
+    grid-area: chart;
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 25px;
+    margin-bottom: 4%;
+    margin-right: 4%;
 }

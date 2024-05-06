@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Account</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='portfolio.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,7 @@
             <p class = "investment-title"> Investment <br> Dashboard </p>
             <a href = "/dashboard/Account" class = "username"> {{user_account}} </a>
         </nav>
+        
         <div class = "sidebar"> 
             <a href = "/dashboard/portfolio" class = "portfolio">Portfolio</a>
             <a href = "/dashboard//HedgeFund" class = "HedgeFund">Hedge Fund</a>
@@ -26,11 +27,21 @@
             <a href = "/dashboard/Account" class = "Account">Account </a>
             <a href = "/dashboard/settings" class = "settings">Settings</a>
         </div>
+        
+        <div class = "sub-container">
+            <div class = "overview-container">
+                <div class = "overview-text"> Overview </div>
+                <div class = "overview-info">
+                
+                </div>
+            </div>
+        </div>
+        
         <div class = "footer"> 
             <div class = "logout-div">
                 <a href = "/" class = "logout"> LogOut </a>
             </div>
         </div>
-    </div>
+
+
 </body>
-</html>

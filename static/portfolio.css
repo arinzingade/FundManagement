@@ -1,7 +1,9 @@
 
+
 body {
     background-color: #101010;
 }
+
 
 .container {
     display: grid;
@@ -57,11 +59,29 @@ nav {
 
 a.portfolio {
     background: linear-gradient(to left, #272140, #200A43);
-    width: fit-content;
-    padding: 3% 3%;
+    width:min-content;
+    padding: 4% 4%;
     border-radius: 10px;
     font-weight: 550;
     padding-right: 19%;
+}
+
+.logout-div a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 350;
+}
+
+.logout-div a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 17% 17%;
+    transition: 0.2s;
+
 }
 
 .footer{
@@ -82,20 +102,16 @@ a.portfolio {
     text-decoration: none;
 }
 
-.logout-div a {
-    font-family: "Sora", sans-serif;
-    font-style: normal;
-    color: #dedede;
-    font-size: 1rem;
-    text-decoration: none;
-    font-weight: 350;
+.sub-container {
+    grid-area: sub-container;
+    display: grid;
+    grid-template-rows: 5fr 5fr;
+    grid-template-areas: 
+    "nav nav"
+    "settlement settlement";
+    grid-gap: 5%;
+    margin-bottom: 1%;
+    background-color:blue;
 }
 
-.logout-div a:hover {
-    background: linear-gradient(to left, #200A43, #272140);
-    border-radius: 10px;
-    font-weight: 600;
-    padding: 17% 17%;
-    transition: 0.2s;
 
-}

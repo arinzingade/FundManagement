@@ -1,10 +1,12 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, request, make_response
-from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
 from pymongo import MongoClient, DESCENDING
 from dashboard import create_dash_app
 import bcrypt
 from datetime import datetime
 import numpy as np
+
+from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
+from functions import AveragePrice
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -12,6 +14,7 @@ appFlask.config['SECRET_KEY'] = "mysecretkey"
 
 # Mongo Client
 client = MongoClient('mongodb://localhost:27017')
+print(client)
 db = client['mydatabase']
 users_collection = db['users']
 office_collection = db['office']
@@ -179,52 +182,25 @@ def client_update():
         type = navform.type.data
         price = navform.price.data
         amount = navform.amount.data
-        
-        if type == 'SELL':
-            shares = -1* round(amount / price, 2) 
-            amount = -1* amount 
-        else:
-            shares = round(amount / price, 2)
+        shares = round(amount / price, 2) 
    
         try:
             nav_info.insert_one({
-                'date': date,
                 'client': client,
+                'date': date,
                 'type': type,
                 'price': price,
-                'amount': amount,
-                'shares': shares,
-                'profit': 0,
-                'returns': 0,
-                'settled': 0,
-                'unsettled': 0,
-                'last_nav_settled': price
+                'qty': shares,
+                'amount': amount
             })
             
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'error')
-  
-    if setForm.validate_on_submit():
-        message_form = setForm.settle_confirm.data
-        if (message_form == "Settle All Accounts"):
-            
-            for doc in nav_info.find():
-                settled = doc['settled'] + doc['unsettled']
-                nav_info.update_one(
-                    {"_id": doc['_id']},
-                    {'$set': {
-                        'settled': settled,
-                        'unsettled': 0,
-                        'last_nav_settled': latest_nav
-                    }}
-                )
-            
-            flash("All Accounts Settled Successfully", 'success')
-            
-        else:
-            flash("Try Again", 'error')
     
+    if setForm.validate_on_submit():
+        total_settled_amount = 0
+        
 
     return render_template('clientUpdate.html', transForm=transForm, navform = navform, settleForm = setForm)
 
@@ -276,8 +252,8 @@ def account():
     user_account = request.cookies.get('username')
     total_shares = 0
     weighted_price = 0
-    unsettel = 0
     withdraw = 0
+    unsettel = 0
     settel = 0
     
     latest_doc = db.fund.find_one(sort = [('date', -1)])
@@ -295,40 +271,24 @@ def account():
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2))
     
     else: 
-        for doc in nav_info.find({'client' : user_account}):
-            
+        arr = []
+        for docs in nav_info.find({'client' : user_account}):
+            arr.append((docs['type'], docs['qty'], docs['price']))
+
+            if docs['type'] == 'BUY':
+                withdraw += docs['amount']
+            else:
+                withdraw -= docs['amount']
+        for elem in arr:
+            print(elem)
+        ap = AveragePrice()
+        info_price = ap.average_price(arr)
+        print(info_price)
         
-            total_shares += doc['shares']  
-            weighted_price += doc['shares']*doc['price']
+        weighted_price = info_price[0]
+        total_shares = info_price[1]
+        withdraw += info_price[2]
    
-                
-        for doc in nav_info.find({'client' : user_account}):
-            
-            profit = (latest_nav - doc['price'])*(doc['shares'])
-            returns = ((latest_nav - doc['price']) / doc['price'])*100
-            unsettel_for = (latest_nav - doc['last_nav_settled']) * doc['shares']
-                
-                
-            nav_info.update_many(
-                {'_id' : doc['_id']},
-                {
-                    '$set': {
-                        'profit': profit,
-                        'returns' : returns,
-                        'unsettled' : unsettel_for
-                    }
-                }
-                
-            )
-        for doc in nav_info.find({'client' : user_account}):
-            unsettel += doc['unsettled']
-            settel += doc['settled']
-            withdraw += doc['amount']
-        
-        weighted_price /= total_shares
-        withdraw += settel
-        
-        
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2))
