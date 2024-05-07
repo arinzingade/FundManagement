@@ -6,7 +6,7 @@ from datetime import datetime
 import numpy as np
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
-from functions import AveragePrice
+from functions import AveragePrice, UpdateNAVdata
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -191,7 +191,11 @@ def client_update():
                 'type': type,
                 'price': price,
                 'qty': shares,
-                'amount': amount
+                'remaining_qty':shares,
+                'amount': amount,
+                'realised': 0,
+                'unrealised': 0,
+                'checked': 0
             })
             
             flash("Transaction Information added successfully!", 'success')
@@ -275,20 +279,16 @@ def account():
         for docs in nav_info.find({'client' : user_account}):
             arr.append((docs['type'], docs['qty'], docs['price']))
 
-            if docs['type'] == 'BUY':
-                withdraw += docs['amount']
-            else:
-                withdraw -= docs['amount']
-        for elem in arr:
-            print(elem)
+   
         ap = AveragePrice()
+        up = UpdateNAVdata()
+       
+        up.update_nav(user_account, latest_nav)
         info_price = ap.average_price(arr)
-        print(info_price)
         
         weighted_price = info_price[0]
         total_shares = info_price[1]
-        withdraw += info_price[2]
-   
+        
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2))
