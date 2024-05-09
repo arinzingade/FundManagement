@@ -30,10 +30,40 @@
         
         <div class = "sub-container">
             <div class = "overview-container">
-                <div class = "overview-text"> Overview </div>
+                <div class = "container-headings-1"> Overview </div>
                 <div class = "overview-info">
-                
+                    <a href = "/" class = "total-invested">
+                        <span class = "sub-heads"> Total Invested </span><br>
+                        <span style = "font-size: 175%"> ₹ {{ total_invested_formatted }}</span>
+                    </a>
+                    <a href = "/" class = "total-profit">
+                        <span class = "sub-heads"> Total Profit </span><br>
+                        {% if total_profit >= 0 %}
+                        <span style="font-size: 175%" class="profit"> ₹{{ total_profit_formatted}} </span>
+                        {% else %}
+                        <span style="font-size: 175%" class = "loss"> ₹ {{ total_profit_formatted }} </span>
+                        {% endif %}
+                    </a>
+                    <a href = "/" class = "total-return">
+                        <span class = "sub-heads"> Total Return </span><br>
+                        <span style = "font-size: 175%"> {{ total_return }} % </span>
+                    </a>
                 </div>
+                <div class = "time-stamps">
+                    <a class = "time-stamps-links" href = "/a"> Select Time Frame </a>
+                </div>
+            </div>
+            <div class = "value-container">
+                <div class = "container-headings-2"> Value </div>
+                <a href = "/" class = "total-invested">
+                  
+                </a>
+            </div>
+            <div class = "invested-container">
+                <div class = "container-headings-2"> Random </div>
+                <a href = "/" class = "total-invested">
+                
+                </a>
             </div>
         </div>
         

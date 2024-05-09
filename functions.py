@@ -59,8 +59,7 @@ class UpdateNAVdata:
                 while (curr_qty > 0 and idx < len(q)):
                     if (q[idx]['remaining_qty'] >= curr_qty):
                         remaining_qty = q[idx]['remaining_qty'] - curr_qty
-                        qty = q[idx]['qty']
-                        price = q[idx]['price']
+                        
                         curr_qty = 0
                         q[idx]['remaining_qty'] = remaining_qty
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': remaining_qty}})
@@ -69,8 +68,19 @@ class UpdateNAVdata:
                         q[idx]['qty'] = 0
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': 0}})
                     idx += 1
-
+        
+        docs.rewind()
+        total_unrealised = 0
+        for elem in docs:
+            if elem['type'] == 'BUY' and elem['client'] == username:
+                remaining = elem['remaining_qty']
+                price = elem['price']
+                unrealised = remaining*(latest_nav - price)
+                nav_info.update_one({'_id':elem['_id']}, {'$set' : {'unrealised' : unrealised}})
+                
+                total_unrealised += elem['unrealised']
+              
         print("Data Manipulated Successfully.")
-        return 
+        return [total_unrealised]
             
         

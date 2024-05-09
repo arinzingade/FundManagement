@@ -94,7 +94,9 @@ a.portfolio {
 }
 
 .logo, .investment-title, 
-.username, .heading, .balance, .settlement-statement, .nav-statement {
+.username, .heading, .balance, .settlement-statement, .nav-statement, 
+.container-headings-1, .container-headings-2, .total-profit, .total-return, .total-invested, .time-stamps-links{
+    
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
@@ -106,12 +108,129 @@ a.portfolio {
     grid-area: sub-container;
     display: grid;
     grid-template-rows: 5fr 5fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas: 
-    "nav nav"
-    "settlement settlement";
-    grid-gap: 5%;
+    "overview overview"
+    "value invested";
     margin-bottom: 1%;
-    background-color:blue;
 }
 
+.overview-container{
+    grid-area: overview;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    background: linear-gradient(to right, #272140, #200A43);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.value-container {
+    grid-area: value;
+    background: linear-gradient(to right, #272140, #200A43);
+    border-radius: 12px;
+    margin-top: 3%;
+    margin-right: 3%;
+    padding-top: 2%;
+    padding-left: 2%;
+}
+
+.invested-container {
+    grid-area: invested;
+    background: linear-gradient(to right, #272140, #200A43);
+    border-radius: 12px;
+    margin-top: 3%;
+    padding-top: 2%;
+    padding-left: 2%;
+}
+
+.time-stamps{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding-right: 7%;
+}
+
+.time-stamps a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background: linear-gradient(to left, #180F3D, #09070D);
+    padding: 0.5% 0.5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 15px;
+}
+
+.time-stamps a:hover {
+    transition: 0.4s;
+    background: linear-gradient(to right, #180F3D, #09070D);    
+}
+
+.sub-heads{
+    font-size: 75%;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+
+.overview-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "total-invested  total-profit  total-return ";
+    grid-gap: 5%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+
+
+.total-invested{
+    grid-area: total-invested;
+}
+
+.total-profit {
+    grid-area: total-profit;
+   
+}
+
+.total-return{
+    grid-area: total-return;
+   
+
+}
+
+.total-invested, .total-profit, .total-return{
+    border-radius: 20px;
+    padding-bottom: 5%;
+}
+
+
+.total-invested:hover, .total-profit:hover, .total-return:hover{
+    transition: 0.4s;
+    background: linear-gradient(to right, #180F3D, #09070D);
+    border-radius: 20px;
+    padding: 5% 5%;
+    transition-delay: 0.01s;
+    font-weight: 525;
+}
+
+.container-headings-1{
+    font-size: 1.7rem;
+    margin-top: -1.3%;
+}
+
+.profit {
+    color: #5bfd41;
+}
+
+.loss {
+    color: rgb(255, 0, 0);
+}
 

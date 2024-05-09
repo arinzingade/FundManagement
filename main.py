@@ -240,7 +240,15 @@ def transactions():
 @appFlask.route('/dashboard/portfolio')
 def portfolio():
     user_account = request.cookies.get('username')
-    return render_template("portfolio.html", user_account = user_account)
+    total_invested = 1021345
+    total_profit = -78123.23
+    total_return = 66.68
+    total_invested_formatted = '{:,.0f}'.format(total_invested)
+    total_profit_formatted = '{:,.0f}'.format(total_profit)
+   
+    return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
+                           total_invested_formatted = total_invested_formatted, total_return=total_return, 
+                           profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted)
 
 @appFlask.route('/dashboard/HedgeFund')
 def hedgeFund():
@@ -279,18 +287,19 @@ def account():
         for docs in nav_info.find({'client' : user_account}):
             arr.append((docs['type'], docs['qty'], docs['price']))
 
-   
-        ap = AveragePrice()
         up = UpdateNAVdata()
-       
-        up.update_nav(user_account, latest_nav)
+        ap = AveragePrice()
+        
         info_price = ap.average_price(arr)
         
-        weighted_price = info_price[0]
+        weighted_price = round(info_price[0],2)
         total_shares = info_price[1]
+        unsettel = round(up.update_nav(user_account, latest_nav)[0],2)
+        
+        unrealised_formatted = '{:,.0f}'.format(round(unsettel))
         
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
-                                            weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
+                                            weighted_price = weighted_price, unsettel = unrealised_formatted,
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2))
 
 if __name__ == '__main__':
