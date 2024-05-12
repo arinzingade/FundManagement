@@ -209,16 +209,13 @@ a.portfolio {
 .total-invested, .total-profit, .total-return{
     border-radius: 20px;
     padding-bottom: 5%;
-}
-
-
-.total-invested:hover, .total-profit:hover, .total-return:hover{
-    transition: 0.4s;
     background: linear-gradient(to right, #180F3D, #09070D);
-    border-radius: 20px;
-    padding: 5% 5%;
-    transition-delay: 0.01s;
+    padding: 1% 1%;
     font-weight: 525;
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    
 }
 
 .container-headings-1{

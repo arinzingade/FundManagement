@@ -59,7 +59,6 @@ class UpdateNAVdata:
                 while (curr_qty > 0 and idx < len(q)):
                     if (q[idx]['remaining_qty'] >= curr_qty):
                         remaining_qty = q[idx]['remaining_qty'] - curr_qty
-                        
                         curr_qty = 0
                         q[idx]['remaining_qty'] = remaining_qty
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': remaining_qty}})
@@ -67,6 +66,7 @@ class UpdateNAVdata:
                         curr_qty -= q[idx]['remaining_qty']
                         q[idx]['qty'] = 0
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': 0}})
+                        
                     idx += 1
         
         docs.rewind()
@@ -83,4 +83,17 @@ class UpdateNAVdata:
         print("Data Manipulated Successfully.")
         return [total_unrealised]
             
+
+class NumberConv:
+    
+    def numConv(self, num):
+        crore = 10000000
+        lakhs = 100000
+        thousands = 1000
         
+        if num >= crore:
+            return str(round(num / crore,2)) + ' Cr'
+        if num >= lakhs:
+            return str(round(num / lakhs,2)) + ' L'
+        if num >= thousands:
+            return str(round(num / thousands,2)) + ' K'

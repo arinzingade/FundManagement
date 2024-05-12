@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class = "container">
+    <div class = "container" id = "blur">
         <nav> 
             <a href = "/" class = "logo"> Zingade <br> Holdings </a> 
             <p class = "investment-title"> Investment <br> Dashboard </p>
@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <div class = "report-1-link">
-                    <a href = "/"> View Detailed NAV Report </a>
+                    <a href = "#" onclick = "toggle()"> View Detailed NAV Report </a>
                 </div>
             </div>
             <div class = "settlement-statement">
@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class = "report-1-link">
-                    <a href = "/"> View Detailed Settlement Report </a>
+                    <a href = "#" > View Account Summary </a>
                 </div>
             </div>
         </div>
@@ -75,5 +75,52 @@
             </div>
         </div>
     </div>
+    <div id = "popup">
+        <div class = "nav-info-head">
+            <h1> Net Asset Value in Your Account </h1>
+        </div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Rem Qty</th>
+                    <th>Amount</th>
+                    <th>Realised</th>
+                    <th>Unrealised</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.remaining_qty }}</td>
+                    <td>{{ item.amount }}</td>
+                    <td>{{ item.realised }}</td>
+                    <td>{{ item.unrealised }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class = "close-link">
+            <a href = "#" onclick = "toggle()"> Close </a>
+        </div>
+    </div>
+
+    <script type = "text/javascript">
+        function toggle() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('active');
+
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

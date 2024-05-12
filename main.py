@@ -6,7 +6,7 @@ from datetime import datetime
 import numpy as np
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
-from functions import AveragePrice, UpdateNAVdata
+from functions import AveragePrice, UpdateNAVdata, NumberConv
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -240,12 +240,15 @@ def transactions():
 @appFlask.route('/dashboard/portfolio')
 def portfolio():
     user_account = request.cookies.get('username')
-    total_invested = 1021345
-    total_profit = -78123.23
+    total_invested = 151010
+    total_profit = 781245612
     total_return = 66.68
-    total_invested_formatted = '{:,.0f}'.format(total_invested)
-    total_profit_formatted = '{:,.0f}'.format(total_profit)
-   
+    
+    numbConv = NumberConv()
+    
+    total_invested_formatted = numbConv.numConv(total_invested)
+    total_profit_formatted = numbConv.numConv(abs(total_profit))
+    
     return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
                            total_invested_formatted = total_invested_formatted, total_return=total_return, 
                            profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted)
@@ -298,9 +301,11 @@ def account():
         
         unrealised_formatted = '{:,.0f}'.format(round(unsettel))
         
+    data = nav_info.find({'client' : user_account})
+    
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
-                                            withdraw = round(withdraw, 2), setteled = round(settel, 2))
+                                            withdraw = round(withdraw, 2), setteled = round(settel, 2), data = data)
 
 if __name__ == '__main__':
     appFlask.run(debug=True)

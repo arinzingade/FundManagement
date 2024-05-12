@@ -37,10 +37,11 @@
                         <span style = "font-size: 175%"> ₹ {{ total_invested_formatted }}</span>
                     </a>
                     <a href = "/" class = "total-profit">
-                        <span class = "sub-heads"> Total Profit </span><br>
                         {% if total_profit >= 0 %}
-                        <span style="font-size: 175%" class="profit"> ₹{{ total_profit_formatted}} </span>
+                        <span class = "sub-heads"> Total Profit </span><br>
+                        <span style="font-size: 175%" class="profit"> ₹ {{ total_profit_formatted}} </span>
                         {% else %}
+                        <span class = "sub-heads"> Total Loss </span><br>
                         <span style="font-size: 175%" class = "loss"> ₹ {{ total_profit_formatted }} </span>
                         {% endif %}
                     </a>
@@ -55,14 +56,14 @@
             </div>
             <div class = "value-container">
                 <div class = "container-headings-2"> Value </div>
-                <a href = "/" class = "total-invested">
-                  
+                <a href = "/" class = "value-invested">
+                 
                 </a>
             </div>
             <div class = "invested-container">
                 <div class = "container-headings-2"> Random </div>
-                <a href = "/" class = "total-invested">
-                
+                <a href = "/" class = "invested-invested">
+                    
                 </a>
             </div>
         </div>
