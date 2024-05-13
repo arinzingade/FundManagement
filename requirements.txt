@@ -1,9 +1,9 @@
 Flask
 pymongo
 bcrypt
-datetime
 numpy
-json
 plotly
+dash
 flask_wtf
 wtforms
+dash_bootstrap_components
