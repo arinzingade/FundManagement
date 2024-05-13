@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, session, flash, request, make_response
 from pymongo import MongoClient, DESCENDING
-from dashboard import create_dash_app
 import bcrypt
 from datetime import datetime
 import numpy as np
@@ -323,5 +322,4 @@ def account():
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2), data = data)
 
-if __name__ == '__main__':
-    appFlask.run(debug=True)
+
