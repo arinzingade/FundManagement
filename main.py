@@ -4,9 +4,14 @@ from dashboard import create_dash_app
 import bcrypt
 from datetime import datetime
 import numpy as np
+import json
+import plotly
+import plotly.express as px
+import plotly.io as pio
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv
+from charts import LineCharts
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -259,11 +264,19 @@ def portfolio():
 @appFlask.route('/dashboard/HedgeFund')
 def hedgeFund():
     user_account = request.cookies.get('username')
-    return render_template("hedgeFund.html", user_account = user_account)
+    
+    nav_chart = LineCharts.NavChart()
+    nav_chartJSON = json.dumps(nav_chart, cls = plotly.utils.PlotlyJSONEncoder)
+    
+    return render_template("hedgeFund.html", user_account = user_account, nav_chart = nav_chartJSON)
 
 @appFlask.route('/dashboard/settings')
 def settings():
-    return render_template("settings.html")
+    
+    fig = LineCharts.NavChart()
+    graph1Json = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    
+    return render_template("settings.html", graph1JSON = graph1Json)
     
 @appFlask.route('/dashboard/Account')
 def account():

@@ -4,66 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stacked Horizontal Bar Chart Example</title>
-  <!-- Include Chart.js from CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <canvas id="myChart" width="400" height="200"></canvas>
-
+  <div class = "chart" id = "chart1"> </div>
+  
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script>
-    // Get the canvas element
-    var ctx = document.getElementById('myChart').getContext('2d');
-    
-    // Define the data for the chart
-    var data = {
-        labels: ['Red'],
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data: [12],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-          },
-          {
-            label: 'Dataset 2',
-            data: [7],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-          }
-        ]
-    };
-
-    // Define chart options
-    var options = {
-        indexAxis: 'y', // Display bars horizontally
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'right', // Position legend to the right
-            },
-            title: {
-                display: true,
-                text: 'Stacked Horizontal Bar Chart'
-            }
-        },
-        scales: {
-            x: {
-                stacked: true // Stack bars on top of each other
-            },
-            y: {
-                stacked: true // Stack bars on top of each other
-            }
-        }
-    };
-
-    // Create the bar chart
-    var myChart = new Chart(ctx, {
-        type: 'bar', // Bar chart type
-        data: data,
-        options: options
-    });
+    var graph1 = {{ graph1JSON | safe}}
+    Plotly.plot("chart1", graph1, {});
   </script>
 </body>
 </html>

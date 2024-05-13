@@ -74,10 +74,10 @@ a.HedgeFund {
 }
 
 .logo, .investment-title, 
-.username, .heading, .balance, .settlement-statement, .nav-statement {
+.username, .heading, .balance, .settlement-statement, .nav-statement, .chart {
     font-family: "Sora", sans-serif;
     font-style: normal;
-    color: #dedede;
+    color: rgb(222, 222, 222);
     font-size: 1.5rem;
     text-decoration: none;
 }
@@ -106,4 +106,6 @@ a.HedgeFund {
     border-radius: 25px;
     margin-bottom: 4%;
     margin-right: 4%;
+    padding-left: 2%;
+    padding-top: 1%;
 }
