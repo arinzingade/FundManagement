@@ -234,8 +234,11 @@ def transactions():
     
     net_balance = total_credit - total_debit
     
+    numbConv = NumberConv()
+    net_balance_format = numbConv.numConv(net_balance,1)
+    
     return render_template("transactions.html", transactions = transactions, username_trans = username_trans,
-                                                net_balance = net_balance)
+                                                net_balance = net_balance_format)
 
 @appFlask.route('/dashboard/portfolio')
 def portfolio():
@@ -246,8 +249,8 @@ def portfolio():
     
     numbConv = NumberConv()
     
-    total_invested_formatted = numbConv.numConv(total_invested)
-    total_profit_formatted = numbConv.numConv(abs(total_profit))
+    total_invested_formatted = numbConv.numConv(total_invested,0)
+    total_profit_formatted = numbConv.numConv(abs(total_profit),0)
     
     return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
                            total_invested_formatted = total_invested_formatted, total_return=total_return, 

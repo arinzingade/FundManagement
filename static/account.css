@@ -1,6 +1,7 @@
 
 body {
     background-color: #101010;
+   
 }
 
 .container#blur.active{
@@ -141,7 +142,7 @@ a.Account {
 }
 
 
-.report-1-link, .close-link{
+.report-1-link{
     width: fit-content;
     background: linear-gradient(to right, #180F3D, #09070D);
     border-radius: 12px;
@@ -214,7 +215,7 @@ a.Account {
 #popup {
     visibility: hidden;
     opacity: 0;
-    transition: 0.05s;
+    transition: 0.1s;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -237,6 +238,7 @@ a.Account {
     text-decoration: none;
     font-weight: 300;
     border-collapse: collapse;
+    background-color: #10101086;
 }
 
 #popup table, #popup th, #popup td {
@@ -265,5 +267,42 @@ a.Account {
 }
 
 .close-link a{
-    font-size: 20px;
+    width: fit-content;
+    background: linear-gradient(to right, #180F3D, #09070D);
+    border-radius: 12px;
+    font-size: 120%;
+    font-weight: 350;
+    padding: 7% 7%;
+    display: flex;
+}
+
+.table-container {
+    height: 80%;
+    overflow-y: scroll;
+    width: 103%;
+    
+}
+
+::-webkit-scrollbar-track {
+    background-color: #101010;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to left, #8376b1, #472481);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to left, #8839ff, #272140)
+}
+
+::-webkit-scrollbar {
+    width:0.5em;
+}
+
+.footer-pop{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    
 }

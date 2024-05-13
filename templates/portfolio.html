@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,70 +8,67 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <div class = "container">
+    <div class="container">
         <nav> 
-            <a href = "/" class = "logo"> Zingade <br> Holdings </a> 
-            <p class = "investment-title"> Investment <br> Dashboard </p>
-            <a href = "/dashboard/Account" class = "username"> {{user_account}} </a>
+            <a href="/" class="logo"> Zingade <br> Holdings </a> 
+            <p class="investment-title"> Investment <br> Dashboard </p>
+            <a href="/dashboard/Account" class="username"> {{user_account}} </a>
         </nav>
         
-        <div class = "sidebar"> 
-            <a href = "/dashboard/portfolio" class = "portfolio">Portfolio</a>
-            <a href = "/dashboard//HedgeFund" class = "HedgeFund">Hedge Fund</a>
+        <div class="sidebar"> 
+            <a href="/dashboard/portfolio" class="portfolio">Portfolio</a>
+            <a href="/dashboard//HedgeFund" class="HedgeFund">Hedge Fund</a>
             <a href="/dashboard/transactions" id="Transactions" class="Transactions">Transactions</a>
-            <a href = "/dashboard/InvestorRelations" class = "News">Disclosures</a>
-            <a href = "/dashboard/Account" class = "Account">Account </a>
-            <a href = "/dashboard/settings" class = "settings">Settings</a>
+            <a href="/dashboard/InvestorRelations" class="News">Disclosures</a>
+            <a href="/dashboard/Account" class="Account">Account </a>
+            <a href="/dashboard/settings" class="settings">Settings</a>
         </div>
         
-        <div class = "sub-container">
-            <div class = "overview-container">
-                <div class = "container-headings-1"> Overview </div>
-                <div class = "overview-info">
-                    <a href = "/" class = "total-invested">
-                        <span class = "sub-heads"> Total Invested </span><br>
-                        <span style = "font-size: 175%"> ₹ {{ total_invested_formatted }}</span>
+        <div class="sub-container">
+            <div class="overview-container">
+                <div class="container-headings-1"> Overview </div>
+                <div class="overview-info">
+                    <a href="/" class="total-invested">
+                        <span class="sub-heads"> Total Invested </span><br>
+                        <span style="font-size: 175%"> ₹ {{ total_invested_formatted }}</span>
                     </a>
-                    <a href = "/" class = "total-profit">
+                    <a href="/" class="total-profit">
                         {% if total_profit >= 0 %}
-                        <span class = "sub-heads"> Total Profit </span><br>
+                        <span class="sub-heads"> Total Profit </span><br>
                         <span style="font-size: 175%" class="profit"> ₹ {{ total_profit_formatted}} </span>
                         {% else %}
-                        <span class = "sub-heads"> Total Loss </span><br>
-                        <span style="font-size: 175%" class = "loss"> ₹ {{ total_profit_formatted }} </span>
+                        <span class="sub-heads"> Total Loss </span><br>
+                        <span style="font-size: 175%" class="loss"> ₹ {{ total_profit_formatted }} </span>
                         {% endif %}
                     </a>
-                    <a href = "/" class = "total-return">
-                        <span class = "sub-heads"> Total Return </span><br>
-                        <span style = "font-size: 175%"> {{ total_return }} % </span>
+                    <a href="/" class="total-return">
+                        <span class="sub-heads"> Total Return </span><br>
+                        <span style="font-size: 175%"> {{ total_return }} % </span>
                     </a>
                 </div>
-                <div class = "time-stamps">
-                    <a class = "time-stamps-links" href = "/a"> Select Time Frame </a>
+                <div class="time-stamps">
+                    <a class="time-stamps-links" href="/a"> Select Time Frame </a>
                 </div>
             </div>
-            <div class = "value-container">
-                <div class = "container-headings-2"> Value </div>
-                <a href = "/" class = "value-invested">
-                 
-                </a>
+            <div class="value-container">
+                <div class="container-headings-2">Value</div>
+                <canvas id="bar-chart"></canvas>
             </div>
-            <div class = "invested-container">
-                <div class = "container-headings-2"> Random </div>
-                <a href = "/" class = "invested-invested">
-                    
-                </a>
+            <div class="invested-container">
+                <div class="container-headings-2"> Random </div>
+                <a href="/" class="invested-invested"></a>
             </div>
         </div>
         
-        <div class = "footer"> 
-            <div class = "logout-div">
-                <a href = "/" class = "logout"> LogOut </a>
+        <div class="footer"> 
+            <div class="logout-div">
+                <a href="/" class="logout"> LogOut </a>
             </div>
         </div>
-
-
+    </div>
 </body>
+</html>

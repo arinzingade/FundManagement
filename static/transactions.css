@@ -161,7 +161,7 @@ a.Transactions {
 
 .scroll-table {
     grid-area: table;
-    height: 90%;
+    height: 98%;
     overflow-y: auto;
     display: flex;
     justify-content: center;

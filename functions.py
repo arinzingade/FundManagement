@@ -86,14 +86,24 @@ class UpdateNAVdata:
 
 class NumberConv:
     
-    def numConv(self, num):
+    def numConv(self, num, flag):
         crore = 10000000
         lakhs = 100000
         thousands = 1000
         
-        if num >= crore:
-            return str(round(num / crore,2)) + ' Cr'
-        if num >= lakhs:
-            return str(round(num / lakhs,2)) + ' L'
-        if num >= thousands:
-            return str(round(num / thousands,2)) + ' K'
+        if flag == 0:
+            if num >= crore:
+                return str(round(num / crore,2)) + ' Cr'
+            if num >= lakhs:
+                return str(round(num / lakhs,2)) + ' L'
+            if num >= thousands:
+                return str(round(num / thousands,2)) + ' K'
+        
+        if flag == 1:
+            if num >= crore:
+                return str(round(num / crore,2)) + ' Crore'
+            if num >= lakhs:
+                return str(round(num / lakhs,2)) + ' Lakhs'
+            if num >= thousands:
+                return str(round(num / thousands,2)) + ' Thousand'
+        
