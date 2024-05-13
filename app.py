@@ -323,3 +323,5 @@ def account():
                                             withdraw = round(withdraw, 2), setteled = round(settel, 2), data = data)
 
 
+if __name__ == '__main__':
+    appFlask.run(debug=True)

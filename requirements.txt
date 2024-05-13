@@ -1,0 +1,9 @@
+Flask
+pymongo
+bcrypt
+datetime
+numpy
+json
+plotly
+flask_wtf
+wtforms
