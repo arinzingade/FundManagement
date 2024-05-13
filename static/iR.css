@@ -63,7 +63,7 @@ footer {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1.5rem;
+    font-size: 1.1vw;
     text-decoration: none;
     text-decoration: none;
 }
@@ -80,7 +80,7 @@ footer {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1.1vw;
     text-decoration: none;
     font-weight: 350;
     transition: 0.2s;
@@ -89,7 +89,7 @@ footer {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1.1vw;
     text-decoration: none;
     font-weight: 350;
     transition: 0.2s;
@@ -138,5 +138,9 @@ a.News{
     font-weight: 550;
     width: fit-content;
     padding-right: 19%;
+}
+
+.Investor-Update, .Reports {
+    font-size: 1.7vw;
 }
 

@@ -46,7 +46,7 @@ table {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1.1vw;
     text-decoration: none;
     font-weight: 200;
     border-collapse: collapse;
@@ -89,7 +89,7 @@ th {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1.5rem;
+    font-size: 1.1vw;
     text-decoration: none;
     text-decoration: none;
 }
@@ -98,7 +98,7 @@ th {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1.1vw;
     text-decoration: none;
     font-weight: 350;
     transition: 0.2s;
@@ -108,7 +108,7 @@ th {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size:1.1vw;
     text-decoration: none;
     font-weight: 350;
     transition: 0.2s;
@@ -144,7 +144,7 @@ th {
 }
 
 .balance {
-    font-size: 1.3rem;
+    font-size: 1.1vw;
     background: linear-gradient(to left, #272140, #200A43);
     border-radius: 14px;
     padding: 1% 1%;
@@ -182,5 +182,9 @@ a.Transactions {
 
 ::-webkit-scrollbar {
     width:0.7em;
+}
+
+.heading, .balance{
+    font-size: 1.5vw;
 }
  

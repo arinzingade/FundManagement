@@ -37,8 +37,20 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
+        function resizeChart() {
+            var chartDiv = document.getElementById('nav-chart');
+            var width = chartDiv.offsetWidth;
+            var height = chartDiv.offsetHeight;
+            Plotly.relayout('nav-chart', {
+                width: width,
+                height: height
+            });
+        }
+
         var navChart = {{nav_chart | safe}}
         Plotly.plot('nav-chart', navChart, {})
+        window.addEventListener('resize', resizeChart);
+        
     </script>
 </body>
 </html>

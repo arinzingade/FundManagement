@@ -43,7 +43,7 @@ nav {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1.1vw;
     text-decoration: none;
     font-weight: 350;
    
@@ -110,7 +110,7 @@ a.Account {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1.5rem;
+    font-size: 1.1vw;
     text-decoration: none;
 }
 
@@ -118,7 +118,7 @@ a.Account {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size:1.1vw;
     text-decoration: none;
     font-weight: 350;
 }
@@ -207,7 +207,7 @@ a.Account {
 }
 
 .heading-1{
-    font-size: 1.7rem;
+    font-size: 1.1vw;
     margin-top: -1.2%;
 }
 
@@ -234,7 +234,7 @@ a.Account {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
-    font-size: 1rem;
+    font-size: 1vw;
     text-decoration: none;
     font-weight: 300;
     border-collapse: collapse;
@@ -263,14 +263,14 @@ a.Account {
 
 
 .nav-info-head {
-    font-size: 1rem;
+    font-size: 1.1vw;
 }
 
 .close-link a{
     width: fit-content;
     background: linear-gradient(to right, #180F3D, #09070D);
     border-radius: 12px;
-    font-size: 120%;
+    font-size: 1.4vw;
     font-weight: 350;
     padding: 7% 7%;
     display: flex;
@@ -297,7 +297,7 @@ a.Account {
 }
 
 ::-webkit-scrollbar {
-    width:0.5em;
+    width:0.5vw;
 }
 
 .footer-pop{
@@ -305,4 +305,8 @@ a.Account {
     justify-content:space-between;
     align-items: center;
     
+}
+
+.nav-statement, .settlement-statement, .heading-1 {
+    font-size: 1.6vw;
 }
