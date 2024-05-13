@@ -48,6 +48,5 @@ class LineCharts:
         )
         return chart
 
-fig = LineCharts.NavChart()
-pio.write_html(fig, 'charts.html')
+
        
