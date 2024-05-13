@@ -307,6 +307,7 @@ def account():
 
         up = UpdateNAVdata()
         ap = AveragePrice()
+        newVar = 0
         
         info_price = ap.average_price(arr)
         
