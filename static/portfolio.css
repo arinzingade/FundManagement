@@ -231,3 +231,7 @@ a.portfolio {
     color: rgb(255, 0, 0);
 }
 
+#bar-chart {
+    height: 0%;
+    margin-right: 3%;
+}
