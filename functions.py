@@ -79,8 +79,7 @@ class UpdateNAVdata:
                 nav_info.update_one({'_id':elem['_id']}, {'$set' : {'unrealised' : unrealised}})
                 
                 total_unrealised += elem['unrealised']
-              
-        print("Data Manipulated Successfully.")
+        
         return [total_unrealised]
             
 

@@ -7,3 +7,4 @@ dash
 flask_wtf
 wtforms
 dash_bootstrap_components
+Werkzeug
