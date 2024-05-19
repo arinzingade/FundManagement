@@ -79,11 +79,13 @@ def signup():
 @appFlask.route('/login', methods=['POST', 'GET'])
 def login():
     loginForm = LoginForm()
+    
     if loginForm.validate_on_submit():
         username = loginForm.username.data
         password = loginForm.password.data
 
         user = users_collection.find_one({'username': username})
+        
 
         if user and bcrypt.checkpw(password.encode('utf-8'), user['hashed_pass']):
             
@@ -156,7 +158,8 @@ def client_update():
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     latest_nav = latest_doc['nav']
         
-    
+    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    print(client_choices)
     if transForm.validate_on_submit():
         
         client = transForm.client.data

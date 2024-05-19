@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField, Float
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from pymongo import MongoClient
 from docker import clientLinkClass
+import email_validator
 
 ck = clientLinkClass()
 client = ck.clientLink(True)

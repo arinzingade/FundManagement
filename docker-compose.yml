@@ -18,7 +18,7 @@ services:
     image: mongo:latest
     hostname: rouge-data
     ports:
-      - "27017:27017"
+      - "27101:27017"
     volumes:
       - mongo-data:/data/db
     networks:

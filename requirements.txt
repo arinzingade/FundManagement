@@ -6,6 +6,8 @@ plotly
 dash
 flask_wtf
 wtforms
+wtforms.validators
 dash_bootstrap_components
 pandas
 Werkzeug
+email_validator
