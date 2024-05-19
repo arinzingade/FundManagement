@@ -8,7 +8,7 @@ import plotly
 import plotly.express as px
 import plotly.io as pio
 from urllib.parse import quote_plus
-
+import os
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv
 from charts import LineCharts
@@ -18,20 +18,9 @@ appFlask = Flask(__name__, static_folder = 'static')
 appFlask.config['SECRET_KEY'] = "mysecretkey"
 
 # Mongo Client
-username = "arinzingade"
-password = "Napobose@01"
-authSource = "mydatabase" 
-host = "localhost"
-port = 27017
-
-escaped_username = quote_plus(username)
-escaped_password = quote_plus(password)
-
-uri = uri = f"mongodb://{escaped_username}:{escaped_password}@db:{port}/?authSource={authSource}"
-
-client = MongoClient(uri)
-
+client = MongoClient(host = 'test_mongodb', port = 27017)
 print(client)
+
 db = client['mydatabase']
 users_collection = db['users']
 office_collection = db['office']

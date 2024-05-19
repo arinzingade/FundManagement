@@ -1,21 +1,27 @@
-services:    # Define services
-  app:       # Service name
+
+services:
+  web:
     build: .
     command: python -u wsgi.py
     ports:
       - "5000:5000"
     volumes:
       - .:/app
-    links:
-      - db
-    
-  db:
-    image: mongo:latest
-    container_name: mongodb
-    hostname: localhost
     environment:
-      - MONGO_INITDB_DATABASE=mydatabase
-      - MONGO_INITDB_ROOT_USERNAME=arinzingade
-      - MONGO_INITDB_ROOT_PASSWORD=Napobose@01
+      - MONGO_URI=mongodb://mongo:27017/test_data
+    depends_on:
+      - mongo
+    networks:
+      - appnet
+
+  mongo:
+    image: mongo:latest
+    hostname: test_mongodb
     ports:
-      - 27017:27017
+      - "27017:27017"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
