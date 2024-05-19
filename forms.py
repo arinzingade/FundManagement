@@ -9,7 +9,6 @@ import email_validator
 ck = clientLinkClass()
 client = ck.clientLink(True)
 
-
 db = client['mydatabase']
 users_collection = db['users']
 office_collection = db['office']

@@ -157,9 +157,7 @@ def client_update():
     setForm = settleForm()
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     latest_nav = latest_doc['nav']
-        
-    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
-    print(client_choices)
+  
     if transForm.validate_on_submit():
         
         client = transForm.client.data
