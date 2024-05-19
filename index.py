@@ -1,2 +1,0 @@
-
-from wsgi import appFlask

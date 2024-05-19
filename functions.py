@@ -2,7 +2,12 @@
 from collections import deque
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://localhost:27017')
+from docker import clientLinkClass
+
+
+ck = clientLinkClass()
+client = ck.clientLink(True)
+
 db = client['mydatabase']
 nav_info = db['nav']
 
