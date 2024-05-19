@@ -11,3 +11,4 @@ dash_bootstrap_components
 pandas
 Werkzeug
 email_validator
+certifi
