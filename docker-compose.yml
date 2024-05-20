@@ -8,25 +8,10 @@ services:
     volumes:
       - .:/app
     environment:
-      - MONGO_URI=mongodb://mongo:27017/mydatabase
-    depends_on:
-      - mongo
-    networks:
-      - appnet
-
-  mongo:
-    image: mongo:latest
-    hostname: rouge-data
-    ports:
-      - "27101:27017"
-    volumes:
-      - mongo-data:/data/db
+      - MONGO_URI=mongodb+srv://arinzingade29:eqoRi2aDw5sI8Xl0@rouge-cluster.lpw9amw.mongodb.net/?retryWrites=true&w=majority&appName=rouge-cluster
     networks:
       - appnet
 
 networks:
   appnet:
     driver: bridge
-
-volumes:
-  mongo-data:
