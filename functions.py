@@ -43,7 +43,7 @@ class AveragePrice:
         if total_qty == 0:
             return (0,0)
         average_price /= total_qty
-        return (average_price, total_qty)
+        return (round(average_price,2), round(total_qty,2))
     
 
 class UpdateNAVdata:
@@ -85,7 +85,7 @@ class UpdateNAVdata:
                 
                 total_unrealised += elem['unrealised']
         
-        return [total_unrealised]
+        return [round(total_unrealised,2)]
             
 
 class NumberConv:

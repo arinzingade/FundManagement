@@ -45,10 +45,12 @@ class PanelForm(FlaskForm):
     
 class TransactionForm(FlaskForm):
     
-    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    def __init__(self, client_choices, *args, **kwargs):
+        super(TransactionForm, self).__init__(*args, **kwargs)
+        self.client.choices = client_choices
     
     date = DateField('Date')
-    client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
+    client = SelectField('Client', validators=[DataRequired()])
     particular = SelectField('Particular', choices = [('DEPOSIT', 'Deposit'), ('WITHDRAW', 'Withdraw')], validators=[DataRequired()])
     type = SelectField('Type', choices = [('NETBANKING', 'Net Banking'), ('UPI', 'Unified Payment')], validators=[DataRequired()])
     debit = FloatField('Debit')

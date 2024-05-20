@@ -10,6 +10,7 @@ import plotly.io as pio
 from urllib.parse import quote_plus
 import os
 
+
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv
 from charts import LineCharts
@@ -152,7 +153,12 @@ def fund_update():
 # Admin Panel
 @appFlask.route('/panel/clientUpdate', methods = ['GET', 'POST'])
 def client_update():   
-    transForm = TransactionForm()
+    
+    users = users_collection.find({}, {'username': 1})
+    client_choices = [(user['username'], user['username']) for user in users]
+    
+    transForm = TransactionForm(client_choices)
+    
     navform = navForm()
     setForm = settleForm()
     latest_doc = db.fund.find_one(sort = [('date', -1)])
@@ -311,8 +317,9 @@ def account():
         for docs in nav_info.find({'client' : user_account}):
             arr.append((docs['type'], docs['qty'], docs['price']))
 
-        up = UpdateNAVdata()
+        
         ap = AveragePrice()
+        up = UpdateNAVdata()
         newVar = 0
         
         info_price = ap.average_price(arr)
