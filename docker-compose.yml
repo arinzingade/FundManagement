@@ -1,4 +1,3 @@
-
 services:
   web:
     build: .
@@ -9,9 +8,3 @@ services:
       - .:/app
     environment:
       - MONGO_URI=mongodb+srv://arinzingade29:eqoRi2aDw5sI8Xl0@rouge-cluster.lpw9amw.mongodb.net/?retryWrites=true&w=majority&appName=rouge-cluster
-    networks:
-      - appnet
-
-networks:
-  appnet:
-    driver: bridge
