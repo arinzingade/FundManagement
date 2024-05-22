@@ -12,7 +12,7 @@ import os
 
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
-from functions import AveragePrice, UpdateNAVdata, NumberConv
+from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested
 from charts import LineCharts
 from docker import clientLinkClass
 
@@ -23,7 +23,6 @@ appFlask.config['SECRET_KEY'] = "mysecretkey"
 # Mongo Client
 ck = clientLinkClass()
 client = ck.clientLink(True)
-print(client)
 
 db = client['mydatabase']
 users_collection = db['users']
@@ -207,8 +206,8 @@ def client_update():
                 'type': type,
                 'price': price,
                 'qty': shares,
-                'remaining_qty':shares,
-                'amount': amount,
+                'remaining_qty': round(shares,2),
+                'amount': round(amount,2),
                 'realised': 0,
                 'unrealised': 0,
                 'checked': 0
@@ -241,14 +240,8 @@ def transactions():
     transactions = transaction_info.find({'client': username_trans}, {'_id': 0})
     transactions = list(transactions)[::-1]
     
-    total_credit = 0
-    total_debit = 0
-    
-    for transaction in transactions:
-        total_credit += transaction.get('credit', 0)
-        total_debit += transaction.get('debit', 0)
-    
-    net_balance = total_credit - total_debit
+    totalInvestedConst = TotalInvested(transaction_info, username_trans)
+    net_balance = totalInvestedConst.total_invested()
     
     numbConv = NumberConv()
     net_balance_format = numbConv.numConv(net_balance,1)
@@ -259,17 +252,41 @@ def transactions():
 @appFlask.route('/dashboard/portfolio')
 def portfolio():
     user_account = request.cookies.get('username')
-    total_invested = 151010
+    
+    totalInvestedConst = TotalInvested(transaction_info, user_account)
+    total_invested = totalInvestedConst.total_invested()
+    
+    ## Total Profit = Unrealised + Realised
+    ## Remember to make it interactive so they can bifurcate
     total_profit = 781245612
-    total_return = 66.68
+    
+    ## Total Returns = Latest NAV/Average NAV - 1
+    latest_doc = db.fund.find_one(sort = [('date', -1)])
+    if latest_doc:
+        latest_nav = latest_doc['nav']
+    else:
+        latest_nav = 0
+    
+    print(latest_nav)
+    arr = []
+    for docs in nav_info.find({'client' : user_account}):
+        arr.append((docs['type'], docs['qty'], docs['price']))
+
+    ap = AveragePrice()
+    avg_nav_price = ap.average_price(arr)[0]
+    
+    if avg_nav_price != 0:
+        total_return = latest_nav/avg_nav_price - 1
+    else:
+        total_return = 0
     
     numbConv = NumberConv()
-    
     total_invested_formatted = numbConv.numConv(total_invested,0)
     total_profit_formatted = numbConv.numConv(abs(total_profit),0)
+    total_return_formatted = round(total_return,2)*100
     
     return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
-                           total_invested_formatted = total_invested_formatted, total_return=total_return, 
+                           total_invested_formatted = total_invested_formatted, total_return_formatted=total_return_formatted, 
                            profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted)
 
 @appFlask.route('/dashboard/HedgeFund')
@@ -319,11 +336,10 @@ def account():
 
         
         ap = AveragePrice()
-        up = UpdateNAVdata()
-        newVar = 0
-        
         info_price = ap.average_price(arr)
         
+        up = UpdateNAVdata()
+        newVar = 0
         weighted_price = round(info_price[0],2)
         total_shares = info_price[1]
         unsettel = round(up.update_nav(user_account, latest_nav)[0],2)
