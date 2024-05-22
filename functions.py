@@ -10,6 +10,7 @@ client = ck.clientLink(True)
 
 db = client['mydatabase']
 nav_info = db['nav']
+transaction_info = db['transactions']
 
 latest_doc = db.fund.find_one(sort = [('date', -1)])
 if latest_doc:
@@ -66,7 +67,7 @@ class UpdateNAVdata:
                         remaining_qty = q[idx]['remaining_qty'] - curr_qty
                         curr_qty = 0
                         q[idx]['remaining_qty'] = remaining_qty
-                        nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': remaining_qty}})
+                        nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': round(remaining_qty,2)}})
                     else:
                         curr_qty -= q[idx]['remaining_qty']
                         q[idx]['qty'] = 0
@@ -81,7 +82,7 @@ class UpdateNAVdata:
                 remaining = elem['remaining_qty']
                 price = elem['price']
                 unrealised = remaining*(latest_nav - price)
-                nav_info.update_one({'_id':elem['_id']}, {'$set' : {'unrealised' : unrealised}})
+                nav_info.update_one({'_id':elem['_id']}, {'$set' : {'unrealised' : round(unrealised,2)}})
                 
                 total_unrealised += elem['unrealised']
         
@@ -110,4 +111,23 @@ class NumberConv:
                 return str(round(num / lakhs,2)) + ' Lakhs'
             if num >= thousands:
                 return str(round(num / thousands,2)) + ' Thousand'
+
+class TotalInvested:
+    
+    def __init__(self, transaction_info, username):
+        self.transaction_info = transaction_info
+        self.username = username
+        self.transactionData = transaction_info.find({'client': username})
+    
+    def total_invested(self):
+        total_invested = 0
+        for elem in self.transactionData:
+            if elem['particular'] == 'DEPOSIT':
+                total_invested += elem['credit']
+            elif elem['particular'] == 'WITHDRAW':
+                total_invested -= elem['debit']
         
+        return total_invested
+
+
+
