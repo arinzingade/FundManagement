@@ -64,24 +64,32 @@ class UpdateNAVdata:
                 idx = 0
                 sold_price = 0
                 counter_qty = 0
+                realised = 0
+                
                 while (curr_qty > 0 and idx < len(q)):
                     if (q[idx]['remaining_qty'] >= curr_qty):
                         remaining_qty = q[idx]['remaining_qty'] - curr_qty
                         counter_qty += curr_qty
                         sold_price += q[idx]['price']*curr_qty
+                        print("Curr qty: ", curr_qty)
+                        realised += curr_qty*(latest_nav - q[idx]['price'])
+                        print("realised 1: ", realised)
                         curr_qty = 0
                         q[idx]['remaining_qty'] = remaining_qty
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': round(remaining_qty,2)}})
+                    
                     elif (q[idx]['remaining_qty'] != 0):
                         curr_qty -= q[idx]['remaining_qty']
                         counter_qty += q[idx]['qty']
                         sold_price += q[idx]['price']*q[idx]['qty']
+                        realised += q[idx]['remaining_qty']*(latest_nav - q[idx]['price'])
+                        print("realised 2: ", realised)
                         q[idx]['qty'] = 0
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': 0}})
+                        
                     idx += 1
                 
                 sold_price /= counter_qty
-                realised = (elem['price'] - sold_price) * elem['qty']
                 nav_info.update_one({'_id':elem['_id']}, {'$set' : {'sold_at' : sold_price}})
                 nav_info.update_one({'_id':elem['_id']}, {'$set' : {'realised' : round(realised,2)}})
                 

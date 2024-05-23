@@ -344,14 +344,16 @@ def account():
         info_list = up.update_nav(user_account, latest_nav)
         unsettel = info_list[0]
         settel = info_list[1]
+        withdraw = unsettel + total_shares*weighted_price
         
         unrealised_formatted = '{:,.0f}'.format(round(unsettel))
         realised_formatted = '{:,.0f}'.format(round(settel))
+        withdraw_formatted = '{:,.0f}'.format(round(withdraw))
         
     data = nav_info.find({'client' : user_account})
     
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
-                                            withdraw = round(withdraw, 2), setteled = realised_formatted, data = data)
+                                            withdraw = withdraw_formatted, setteled = realised_formatted, data = data)
 
 
