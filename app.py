@@ -210,7 +210,8 @@ def client_update():
                 'amount': round(amount,2),
                 'realised': 0,
                 'unrealised': 0,
-                'checked': 0
+                'checked': 0,
+                'sold_at': 0
             })
             
             flash("Transaction Information added successfully!", 'success')
@@ -266,8 +267,7 @@ def portfolio():
         latest_nav = latest_doc['nav']
     else:
         latest_nav = 0
-    
-    print(latest_nav)
+
     arr = []
     for docs in nav_info.find({'client' : user_account}):
         arr.append((docs['type'], docs['qty'], docs['price']))
@@ -320,8 +320,7 @@ def account():
         latest_nav = latest_doc['nav']
     else:
         latest_nav = 0
-
-       
+        
     if (nav_info.count_documents({'client': user_account}) == 0):
         print(nav_info.count_documents({'username': user_account}))
         print('fail')
@@ -342,14 +341,17 @@ def account():
         newVar = 0
         weighted_price = round(info_price[0],2)
         total_shares = info_price[1]
-        unsettel = round(up.update_nav(user_account, latest_nav)[0],2)
+        info_list = up.update_nav(user_account, latest_nav)
+        unsettel = info_list[0]
+        settel = info_list[1]
         
         unrealised_formatted = '{:,.0f}'.format(round(unsettel))
+        realised_formatted = '{:,.0f}'.format(round(settel))
         
     data = nav_info.find({'client' : user_account})
     
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
-                                            withdraw = round(withdraw, 2), setteled = round(settel, 2), data = data)
+                                            withdraw = round(withdraw, 2), setteled = realised_formatted, data = data)
 
 
