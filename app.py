@@ -298,13 +298,13 @@ def hedgeFund():
     
     return render_template("hedgeFund.html", user_account = user_account, nav_chart = nav_chartJSON)
 
-@appFlask.route('/dashboard/settings')
-def settings():
+@appFlask.route('/dashboard/Markets')
+def Markets():
     
     fig = LineCharts.NavChart()
     graph1Json = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
     
-    return render_template("settings.html", graph1JSON = graph1Json)
+    return render_template("Markets.html", graph1JSON = graph1Json)
     
 @appFlask.route('/dashboard/Account')
 def account():
@@ -338,7 +338,7 @@ def account():
         info_price = ap.average_price(arr)
         
         up = UpdateNAVdata()
-        newVar = 0
+    
         weighted_price = round(info_price[0],2)
         total_shares = info_price[1]
         info_list = up.update_nav(user_account, latest_nav)

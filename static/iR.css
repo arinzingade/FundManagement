@@ -116,7 +116,7 @@ footer {
     margin-right: 90%;
     display: flex;
     justify-content: left;
-   
+    width: fit-content;
 }
 
 .logout-div a:hover {
@@ -144,3 +144,7 @@ a.News{
     font-size: 1.7vw;
 }
 
+.Generate-Report {
+    margin-left: 150%;
+    width: fit-content;
+}

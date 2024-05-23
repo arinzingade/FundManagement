@@ -52,7 +52,7 @@ class TransactionForm(FlaskForm):
     date = DateField('Date')
     client = SelectField('Client', validators=[DataRequired()])
     particular = SelectField('Particular', choices = [('DEPOSIT', 'Deposit'), ('WITHDRAW', 'Withdraw')], validators=[DataRequired()])
-    type = SelectField('Type', choices = [('NETBANKING', 'Net Banking'), ('UPI', 'Unified Payment')], validators=[DataRequired()])
+    type = SelectField('Type', choices = [('NETBANKING', 'Net Banking'), ('UPI', 'Unified Payment'), ('FEES', 'Fees')], validators=[DataRequired()])
     debit = FloatField('Debit')
     credit = FloatField('Credit')
     submit = SubmitField('Submit')

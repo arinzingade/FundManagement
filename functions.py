@@ -99,6 +99,7 @@ class UpdateNAVdata:
         total_realised = 0
         for elem in docs:
             if elem['type'] == 'BUY' and elem['client'] == username:
+                print(latest_nav)
                 remaining = elem['remaining_qty']
                 price = elem['price']
                 unrealised = remaining*(latest_nav - price)
