@@ -1,16 +1,26 @@
 
 from collections import deque
 from pymongo import MongoClient
+import pandas as pd
+import numpy as np
 
 from docker import clientLinkClass
 
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, PageTemplate, Frame
+from reportlab.lib import colors
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.platypus import Paragraph
+from pdfrw import PdfReader, PageMerge, PdfWriter
+import PyPDF2
 
 ck = clientLinkClass()
 client = ck.clientLink(True)
-
 db = client['mydatabase']
+
 nav_info = db['nav']
 transaction_info = db['transactions']
+fund_info = db['fund']
 
 latest_doc = db.fund.find_one(sort = [('date', -1)])
 if latest_doc:
@@ -154,4 +164,41 @@ class TotalInvested:
         return total_invested
 
 
+class MakeDFfromMongo:
+    
+    def GenerateDf_FromMongo_Username(self, username, collection):
+        cursor = collection.find({'client': username})
+        docs = list(cursor)[::-1]
+        
+        data = pd.DataFrame(docs)
+        data.drop('_id', axis=1, inplace=True)
+        df = data.values.tolist()
+        cols = data.columns.tolist()
+        df.insert(0, cols)
+        return df
+    
+    def GenerateDf_FromMongo_General(self, collection):
+        cursor = collection.find({})
+        docs = list(cursor)
+        
+        data = pd.DataFrame(docs)
+        data.drop('_id', axis=1, inplace=True)
+        data.dropna(inplace=True)
+        return data
 
+class GenerateData_ForCharts:
+    
+    def GenerateNAVChart(self):
+        mkDf = MakeDFfromMongo()
+        df = mkDf.GenerateDf_FromMongo_General(fund_info)
+        
+        nav = np.array(df['nav'])
+        dates = np.array(df['date'])
+        return [nav, dates]
+        
+        
+            
+if __name__ == "__main__":
+    
+    gc = GenerateData_ForCharts()
+    gc.GenerateNAVChart()

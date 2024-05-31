@@ -268,7 +268,7 @@ a.Account {
 
 .close-link a{
     width: fit-content;
-    background: linear-gradient(to right, #180F3D, #09070D);
+    background: linear-gradient(to right, rgb(24, 15, 61), #09070D);
     border-radius: 12px;
     font-size: 1.4vw;
     font-weight: 350;

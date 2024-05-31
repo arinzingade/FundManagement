@@ -12,3 +12,4 @@ pandas
 Werkzeug
 email_validator
 certifi
+reportLab

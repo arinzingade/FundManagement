@@ -5,23 +5,40 @@ import plotly.io as pio
 from flask import Flask, render_template
 import pandas as pd
 
+from functions import GenerateData_ForCharts
+from docker import clientLinkClass
+
+
+ck = clientLinkClass()
+client = ck.clientLink(True)
+db = client['mydatabase']
+fund_info = db['fund']
+
+y = []
+for i in range(0,298):
+    y.append(i)
+
+
 class LineCharts:
     
     def NavChart():
         
+        gdfc = GenerateData_ForCharts()
+        fund_data = gdfc.GenerateNAVChart()
+        nav = fund_data[0]
+        dates = fund_data[1]
+        dates = pd.to_datetime(dates)
+        
         df = pd.DataFrame({
-            'x': [1, 2, 3, 4, 5],
-            'y': [100, 250, 350, 1000, 1560]
+            'x': dates,
+            'y': nav
         })
-     
-        chart = px.line(df, x='x', y='y', line_shape='spline')
+
+        df.sort_values('x', inplace=True)
+        
+        chart = px.line(df, x='x', y='y')
         chart.update_traces(line_color = 'yellow')
 
-        specific_points = [(2, 250), (4, 1000)]  # Example specific points
-        for point in specific_points:
-            x_point, y_point = point
-            chart.add_trace(px.scatter(x=[x_point], y=[y_point]).data[0])
-        
         chart.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',  
             paper_bgcolor='rgba(0,0,0,0)',  
@@ -46,7 +63,7 @@ class LineCharts:
                 )
             )
         )
+        print(nav)
         return chart
-
 
        
