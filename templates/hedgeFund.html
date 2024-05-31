@@ -1,56 +1,67 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hedge Fund</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='hedgeFund.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-   
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='hedgeFund.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <div class = "container">
-        <nav> 
-            <a href = "/" class = "logo"> Zingade <br> Holdings </a> 
-            <p class = "investment-title"> Investment <br> Dashboard </p>
-            <a href = "/dashboard/Account" class = "username"> {{user_account}} </a>
-        </nav>
-        <div class = "sidebar"> 
-            <a href = "/dashboard/portfolio" class = "portfolio">Portfolio</a>
-            <a href = "/dashboard//HedgeFund" class = "HedgeFund">Hedge Fund</a>
-            <a href="/dashboard/transactions" id="Transactions" class="Transactions">Transactions</a>
-            <a href = "/dashboard/InvestorRelations" class = "News">Disclosures</a>
-            <a href = "/dashboard/Account" class = "Account">Account </a>
-            <a href = "/dashboard/Markets" class = "settings">Markets</a>
+  <body>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">
+          Zingade <br />
+          Holdings
+        </a>
+        <p class="investment-title">
+          Investment <br />
+          Dashboard
+        </p>
+        <a href="/dashboard/Account" class="username"> {{user_account}} </a>
+      </nav>
+      <div class="sidebar">
+        <a href="/dashboard/portfolio" class="portfolio">Portfolio</a>
+        <a href="/dashboard//HedgeFund" class="HedgeFund">Hedge Fund</a>
+        <a href="/dashboard/transactions" id="Transactions" class="Transactions"
+          >Transactions</a
+        >
+        <a href="/dashboard/InvestorRelations" class="News">Disclosures</a>
+        <a href="/dashboard/Account" class="Account">Account </a>
+        <a href="/dashboard/Markets" class="settings">Markets</a>
+      </div>
+      <div class="chart" id="nav-chart">Net Asset Value</div>
+      <div class="footer">
+        <div class="logout-div">
+          <a href="/" class="logout"> LogOut </a>
         </div>
-        <div class = "chart" id = "nav-chart"> Net Asset Value </div>
-        <div class = "footer"> 
-            <div class = "logout-div">
-                <a href = "/" class = "logout"> LogOut </a>
-            </div>
-        </div>
+      </div>
     </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
-        function resizeChart() {
-            var chartDiv = document.getElementById('nav-chart');
-            var width = chartDiv.offsetWidth;
-            var height = chartDiv.offsetHeight;
-            Plotly.relayout('nav-chart', {
-                width: width,
-                height: height
-            });
-        }
+      function resizeChart() {
+          var chartDiv = document.getElementById('nav-chart');
+          var width = chartDiv.offsetWidth;
+          var height = chartDiv.offsetHeight;
+          Plotly.relayout('nav-chart', {
+              width: width,
+              height: height
+          });
+      }
 
-        var navChart = {{nav_chart | safe}}
-        Plotly.plot('nav-chart', navChart, {})
-        window.addEventListener('resize', resizeChart);
-        
+      var navChart = {{nav_chart | safe}}
+      Plotly.plot('nav-chart', navChart, {})
+      window.addEventListener('resize', resizeChart);
     </script>
-</body>
+  </body>
 </html>

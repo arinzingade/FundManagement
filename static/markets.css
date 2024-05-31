@@ -1,0 +1,41 @@
+.container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+    "line bar box"
+    "hist vio pie";
+    height: 80vh;
+    grid-gap: 2%;
+}
+
+
+.line {
+    grid-area: line;
+    transition: 1s;
+}
+
+.bar {
+    grid-area: bar;
+    transition: 1s;
+}
+
+.box {
+    grid-area: box;
+    transition: 5ms;
+}
+
+.hist {
+    grid-area: hist;
+    transition: 5ms;
+}
+
+.vio {
+    grid-area: vio;
+    transition: 5ms;
+}
+
+.pie {
+    grid-area: pie;
+    transition: 5ms;
+}

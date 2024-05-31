@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stacked Horizontal Bar Chart Example</title>
-</head>
-<body>
-  <div class = "chart" id = "chart1"> </div>
-  
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script>
-    var graph1 = {{ graph1JSON | safe}}
-    Plotly.plot("chart1", graph1, {});
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='markets.css') }}">
+    <title>Stacked Horizontal Bar Chart Example</title>
+  </head>
+  <body>
+    <div class = "container">
+      <div class="line">{{ line | safe }}</div>
+      <div class="bar">{{ bar | safe }}</div>
+      <div class="box">{{ box | safe }}</div>
+      <div class="hist">{{ hist | safe }}</div>
+      <div class="vio">{{ vio | safe }}</div>
+      <div class="pie">{{ pie | safe }}</div>
+    </div>
+  </body>
 </html>

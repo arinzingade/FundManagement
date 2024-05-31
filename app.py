@@ -301,10 +301,31 @@ def hedgeFund():
 @appFlask.route('/dashboard/Markets')
 def Markets():
     
-    fig = LineCharts.NavChart()
-    graph1Json = json.dumps(fig, cls = plotly.utils.PlotlyJSONEncoder)
+    df = px.data.iris()
+    fig = px.line(df, x="sepal_width", y="sepal_length", color="species", title="Line Chart of Sepal Width vs Sepal Length")
+    line = pio.to_html(fig, full_html=False)
     
-    return render_template("Markets.html", graph1JSON = graph1Json)
+    df = px.data.iris()
+    fig = px.bar(df, x="species", y="sepal_length", color="species", title="Bar Chart of Sepal Length by Species")
+    bar = pio.to_html(fig, full_html=False)
+    
+    df = px.data.iris()
+    fig = px.box(df, x="species", y="sepal_length", color="species", title="Box Plot of Sepal Length by Species")
+    box = pio.to_html(fig, full_html=False)
+    
+    df = px.data.iris()
+    fig = px.histogram(df, x="sepal_length", color="species", title="Histogram of Sepal Length")
+    hist = pio.to_html(fig, full_html=False)
+    
+    df = px.data.iris()
+    fig = px.violin(df, x="species", y="sepal_length", color="species", title="Violin Plot of Sepal Length by Species")
+    vio = pio.to_html(fig, full_html=False)
+    
+    df = px.data.iris()
+    fig = px.pie(df, names="species", title="Pie Chart of Species Distribution")
+    pie = pio.to_html(fig, full_html=False)
+    
+    return render_template("Markets.html", line = line, bar = bar, box = box, hist = hist, vio = vio, pie = pie)
     
 @appFlask.route('/dashboard/Account')
 def account():

@@ -1,54 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fund Update</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main">
-        <h2>This is for Updating the Fund Information</h2>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-        
-            <div class="total_assets">
-                <label for="totalAssets">Total Assets</label>
-                {{ form.totalAssets(class="form-control", id="totalAssets", 
-                                    placeholder="Assets as of Today", type = "number",
-                                    step = "any") }}
-            </div>
-        
-            <div class="total_liabilities">
-                <label for="totalLiabilities">Total Liabilities</label>
-                {{ form.totalLiabilities(class="form-control", id="totalLiab", 
-                                        placeholder="Liabilities as of Today", type = "number",
-                                        step = "any") }}
-            </div>
-        
-            <div class="nav">
-                <label for="nav">Net Asset Value</label>
-                {{ form.nav(class="form-control", id="nav", placeholder="NAV as of Today", 
-                             step = "any", type = "number") }}
-            </div>
-            
-            <div class="expenses">
-                <label for="expenses">Expenses</label>
-                {{ form.expenses(class="form-control", id="expenses", placeholder="Expenses Today", 
-                             step = "any", type = "number") }}
-            </div>
+      <h2>This is for Updating the Fund Information</h2>
+      <form method="POST">
+        {{ form.hidden_tag() }}
 
-            <button type="submit" class="submit_button">Submit</button>
-        </form>        
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        <div class="total_assets">
+          <label for="totalAssets">Total Assets</label>
+          {{ form.totalAssets(class="form-control", id="totalAssets",
+          placeholder="Assets as of Today", type = "number", step = "any") }}
+        </div>
+
+        <div class="total_liabilities">
+          <label for="totalLiabilities">Total Liabilities</label>
+          {{ form.totalLiabilities(class="form-control", id="totalLiab",
+          placeholder="Liabilities as of Today", type = "number", step = "any")
+          }}
+        </div>
+
+        <div class="nav">
+          <label for="nav">Net Asset Value</label>
+          {{ form.nav(class="form-control", id="nav", placeholder="NAV as of
+          Today", step = "any", type = "number") }}
+        </div>
+
+        <div class="expenses">
+          <label for="expenses">Expenses</label>
+          {{ form.expenses(class="form-control", id="expenses",
+          placeholder="Expenses Today", step = "any", type = "number") }}
+        </div>
+
+        <button type="submit" class="submit_button">Submit</button>
+      </form>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
     </div>
-</body>
+  </body>
 </html>

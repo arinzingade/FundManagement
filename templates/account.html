@@ -1,133 +1,146 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class = "container" id = "blur">
-        <nav> 
-            <a href = "/" class = "logo"> Zingade <br> Holdings </a> 
-            <p class = "investment-title"> Investment <br> Dashboard </p>
-            <a href = "/dashboard/Account" class = "username"> {{user_account}} </a>
-        </nav>
-    
-        <div class = "sidebar"> 
-            <a href = "/dashboard/portfolio" class = "portfolio">Portfolio</a>
-            <a href = "/dashboard//HedgeFund" class = "HedgeFund">Hedge Fund</a>
-            <a href="/dashboard/transactions" id="Transactions" class="Transactions">Transactions</a>
-            <a href = "/dashboard/InvestorRelations" class = "News">Disclosures</a>
-            <a href = "/dashboard/Account" class = "Account">Account </a>
-            <a href = "/dashboard/Markets" class = "settings">Markets</a>
-        </div>
-        <div class = "sub-container">
-            <div class = "nav-statement">
-                <div class = "heading-1"> Transaction Statement </div>
-                <div class = "total_shares">
-                    <a href = "/" class = "shares">
-                        <span class = "sub-heads"> Number of Shares</span><br>
-                        <span style = "font-size: 175%"> {{ total_shares }}</span>
-                    </a>
-                    <a href = "/" class = "with-balance">
-                        <span class = "sub-heads">Withdrawable Balance</span><br>
-                        <span style = "font-size: 175%"> ₹ {{ withdraw }} </span>
-                    </a>
-                    <a href = "/" class = "avg-nav">
-                        <span class = "sub-heads">Average NAV Price</span><br>
-                        <span style = "font-size: 175%"> ₹ {{ weighted_price }} </span>
-                    </a>
-                </div>
-                <div class = "report-1-link">
-                    <a href = "#" onclick = "toggle()"> View Detailed NAV Report </a>
-                </div>
-            </div>
-            <div class = "settlement-statement">
-                <div class = "heading-1"> Settlement Cycle </div>
-                <div class = "total_shares">
-                    <a href = "/" class = "shares">
-                        <span class = "sub-heads">Realised Amount</span><br>
-                        <span style = "font-size: 175%"> ₹ {{ setteled }} </span>
-                    </a>
-                    <a href = "/" class = "with-balance">
-                        <span class = "sub-heads">Unrealised Amount</span><br>
-                        <span style = "font-size: 175%"> ₹ {{ unsettel }} </span>
-                    </a>
-                    <a href = "/" class = "avg-nav">
-                        <span class = "sub-heads">Due Bond Payments</span><br>
-                        <span style = "font-size: 175%"> ₹ {{ total_shares }} </span>
-                    </a>
-                </div>
-                <div class = "report-1-link">
-                    <a href = "#" > View Account Summary </a>
-                </div>
-            </div>
-        </div>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='account.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container" id="blur">
+      <nav>
+        <a href="/" class="logo">
+          Zingade <br />
+          Holdings
+        </a>
+        <p class="investment-title">
+          Investment <br />
+          Dashboard
+        </p>
+        <a href="/dashboard/Account" class="username"> {{user_account}} </a>
+      </nav>
 
-        <div class = "footer"> 
-            <div class = "logout-div">
-                <a href = "/" class = "logout"> LogOut </a>
-            </div>
+      <div class="sidebar">
+        <a href="/dashboard/portfolio" class="portfolio">Portfolio</a>
+        <a href="/dashboard//HedgeFund" class="HedgeFund">Hedge Fund</a>
+        <a href="/dashboard/transactions" id="Transactions" class="Transactions"
+          >Transactions</a
+        >
+        <a href="/dashboard/InvestorRelations" class="News">Disclosures</a>
+        <a href="/dashboard/Account" class="Account">Account </a>
+        <a href="/dashboard/Markets" class="settings">Markets</a>
+      </div>
+      <div class="sub-container">
+        <div class="nav-statement">
+          <div class="heading-1">Transaction Statement</div>
+          <div class="total_shares">
+            <a href="/" class="shares">
+              <span class="sub-heads"> Number of Shares</span><br />
+              <span style="font-size: 175%"> {{ total_shares }}</span>
+            </a>
+            <a href="/" class="with-balance">
+              <span class="sub-heads">Withdrawable Balance</span><br />
+              <span style="font-size: 175%"> ₹ {{ withdraw }} </span>
+            </a>
+            <a href="/" class="avg-nav">
+              <span class="sub-heads">Average NAV Price</span><br />
+              <span style="font-size: 175%"> ₹ {{ weighted_price }} </span>
+            </a>
+          </div>
+          <div class="report-1-link">
+            <a href="#" onclick="toggle()"> View Detailed NAV Report </a>
+          </div>
         </div>
+        <div class="settlement-statement">
+          <div class="heading-1">Settlement Cycle</div>
+          <div class="total_shares">
+            <a href="/" class="shares">
+              <span class="sub-heads">Realised Amount</span><br />
+              <span style="font-size: 175%"> ₹ {{ setteled }} </span>
+            </a>
+            <a href="/" class="with-balance">
+              <span class="sub-heads">Unrealised Amount</span><br />
+              <span style="font-size: 175%"> ₹ {{ unsettel }} </span>
+            </a>
+            <a href="/" class="avg-nav">
+              <span class="sub-heads">Due Bond Payments</span><br />
+              <span style="font-size: 175%"> ₹ {{ total_shares }} </span>
+            </a>
+          </div>
+          <div class="report-1-link">
+            <a href="#"> View Account Summary </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="logout-div">
+          <a href="/" class="logout"> LogOut </a>
+        </div>
+      </div>
     </div>
     <div id="popup">
-        <div class="nav-info-head">
-            <h1>Statement of Net Asset Value</h1>
+      <div class="nav-info-head">
+        <h1>Statement of Net Asset Value</h1>
+      </div>
+      <div class="table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Rem Qty</th>
+              <th>Amount</th>
+              <th>Realised</th>
+              <th>Unrealised</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in data %}
+            <tr>
+              <td style="width: 7em">{{ item.date }}</td>
+              <td style="width: 2em">{{ item.type }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.qty }}</td>
+              <td>{{ item.remaining_qty }}</td>
+              <td>{{ item.amount }}</td>
+              <td>{{ item.realised }}</td>
+              <td>{{ item.unrealised }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="footer-pop">
+        <div class="close-link">
+          <a href="#" onclick="toggle()">Close</a>
         </div>
-        <div class="table-container">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Rem Qty</th>
-                        <th>Amount</th>
-                        <th>Realised</th>
-                        <th>Unrealised</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in data %}
-                    <tr>
-                        <td style = "width : 7em">{{ item.date }}</td>
-                        <td style = "width : 2em">{{ item.type }}</td>
-                        <td>{{ item.price }}</td>
-                        <td>{{ item.qty }}</td>
-                        <td>{{ item.remaining_qty }}</td>
-                        <td>{{ item.amount }}</td>
-                        <td>{{ item.realised }}</td>
-                        <td>{{ item.unrealised }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="close-link">
+          <a href="#" onclick="toggle()">Download </a>
         </div>
-        <br>
-        <div class = "footer-pop">
-            <div class="close-link">
-                <a href="#" onclick="toggle()">Close</a>
-            </div>
-            <div class="close-link">
-                <a href="#" onclick="toggle()">Download </a>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <script type = "text/javascript">
-        function toggle() {
-            var blur = document.getElementById('blur');
-            blur.classList.toggle('active');
+    <script type="text/javascript">
+      function toggle() {
+        var blur = document.getElementById("blur");
+        blur.classList.toggle("active");
 
-            var popup = document.getElementById('popup');
-            popup.classList.toggle('active');
-        }
+        var popup = document.getElementById("popup");
+        popup.classList.toggle("active");
+      }
     </script>
-</body>
+  </body>
 </html>

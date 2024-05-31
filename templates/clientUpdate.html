@@ -1,92 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Client Update </title>
-</head>
-<body> 
-    <h2> This is for Transaction </h2>
-    <form method = "POST" onsubmit="return preventSubmit()">
-    {{ transForm.hidden_tag() }}
-        <div>
-            {{ transForm.date.label }} {{ transForm.date()}}
-        </div>
-        <div>
-            {{ transForm.client.label }} {{ transForm.client()}}
-        </div>
-        <div>
-            {{ transForm.particular.label }} {{ transForm.particular() }}
-        </div>
-        <div>
-            {{ transForm.type.label }} {{ transForm.type() }}
-        </div>
-        <div>
-            {{ transForm.debit.label }} {{ transForm.debit(size=10) }}
-        </div>
-        <div>
-            {{ transForm.credit.label }} {{ transForm.credit(size=10) }}
-        </div>
-        <div>
-            {{ transForm.submit }}
-        </div>
-    </form>
-
-    <h2> This is for NAV Allotment </h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Update</title>
+  </head>
+  <body>
+    <h2>This is for Transaction</h2>
     <form method="POST" onsubmit="return preventSubmit()">
-        {{ navform.hidden_tag() }}
-        <div>
-            {{ navform.date.label }} {{ navform.date()}}
-        </div>
-        <div>
-            {{ navform.client.label }} {{ navform.client()}}
-        </div>
-        <div>
-            {{ navform.type.label }} {{ navform.type() }}
-        </div>
-        <div>
-            {{ navform.price.label }} {{ navform.price() }}
-        </div>
-        <div>
-            {{ navform.amount.label }} {{ navform.amount() }}
-        </div>
-        <div>
-            {{ navform.submit }}
-        </div>
-    </form>
-    
-    <br>
-    <form method = "POST" onsubmit="return preventSubmit()">
-        {{settleForm.hidden_tag()}}
-        <div>
-            {{ settleForm.settle_confirm.label }} {{settleForm.settle_confirm()}}
-        </div>
-        <div>
-            {{settleForm.submit}}
-        </div>
+      {{ transForm.hidden_tag() }}
+      <div>{{ transForm.date.label }} {{ transForm.date()}}</div>
+      <div>{{ transForm.client.label }} {{ transForm.client()}}</div>
+      <div>{{ transForm.particular.label }} {{ transForm.particular() }}</div>
+      <div>{{ transForm.type.label }} {{ transForm.type() }}</div>
+      <div>{{ transForm.debit.label }} {{ transForm.debit(size=10) }}</div>
+      <div>{{ transForm.credit.label }} {{ transForm.credit(size=10) }}</div>
+      <div>{{ transForm.submit }}</div>
     </form>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+    <h2>This is for NAV Allotment</h2>
+    <form method="POST" onsubmit="return preventSubmit()">
+      {{ navform.hidden_tag() }}
+      <div>{{ navform.date.label }} {{ navform.date()}}</div>
+      <div>{{ navform.client.label }} {{ navform.client()}}</div>
+      <div>{{ navform.type.label }} {{ navform.type() }}</div>
+      <div>{{ navform.price.label }} {{ navform.price() }}</div>
+      <div>{{ navform.amount.label }} {{ navform.amount() }}</div>
+      <div>{{ navform.submit }}</div>
+    </form>
+
+    <br />
+    <form method="POST" onsubmit="return preventSubmit()">
+      {{settleForm.hidden_tag()}}
+      <div>
+        {{ settleForm.settle_confirm.label }} {{settleForm.settle_confirm()}}
+      </div>
+      <div>{{settleForm.submit}}</div>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
 
     <script>
-        function preventSubmit(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                return false;
-            }
+      function preventSubmit(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          return false;
         }
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('keypress', preventSubmit);
-        });
-        document.getElementById('settleForm').addEventListener('keypress', preventSubmit);
+      }
+      document.querySelectorAll("form").forEach((form) => {
+        form.addEventListener("keypress", preventSubmit);
+      });
+      document
+        .getElementById("settleForm")
+        .addEventListener("keypress", preventSubmit);
     </script>
-</body>
+  </body>
 </html>

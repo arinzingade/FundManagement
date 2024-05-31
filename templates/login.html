@@ -1,63 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="static/login.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-</head>
-<body>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="static/login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="main">
-        <div class="dashboard-cont">
-            <h2 class="dashboard-title">Investment Dashboard</h2>
+      <div class="dashboard-cont">
+        <h2 class="dashboard-title">Investment Dashboard</h2>
+      </div>
+      <div class="container">
+        <div class="welcome-cont">
+          <h2 class="welcome">
+            Welcome <br />
+            <span class="back">Back</span>
+          </h2>
         </div>
-        <div class="container">
-            <div class="welcome-cont">
-                <h2 class="welcome"> Welcome <br> <span class="back">Back</span> </h2>
-            </div>
-            <form method="post" action="{{ url_for('login') }}" class="form">
-                {{ form.csrf_token }}
-                <div class="form-group-username">
-                    <label for="username">Username / Client ID:</label>
-                    {{ form.username(size=20, id="username") }}
-                    {% for error in form.username.errors %}
-                        <div class="error-message">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="form-group-password">
-                    <label for="password">Password:</label>
-                    {{ form.password(size=20, id="password") }}
-                    {% for error in form.password.errors %}
-                        <div class="error-message">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="loginButton">
-                    {{ form.submit (class = "submit-button")}}
-                </div>
-            </form>
-        </div>
-    
-        <div>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-        
+        <form method="post" action="{{ url_for('login') }}" class="form">
+          {{ form.csrf_token }}
+          <div class="form-group-username">
+            <label for="username">Username / Client ID:</label>
+            {{ form.username(size=20, id="username") }} {% for error in
+            form.username.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="form-group-password">
+            <label for="password">Password:</label>
+            {{ form.password(size=20, id="password") }} {% for error in
+            form.password.errors %}
+            <div class="error-message">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="loginButton">
+            {{ form.submit (class = "submit-button")}}
+          </div>
+        </form>
+      </div>
+
+      <div>
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+      </div>
     </div>
-    <img src = "static/images/logo.png" class = "logo"> 
-    
-</body>
+    <img src="static/images/logo.png" class="logo" />
+  </body>
 </html>

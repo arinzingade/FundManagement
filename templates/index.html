@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Table</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Data Table</h1>
     <table border="1">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Total Assets</th>
-                <th>Total Liabilities</th>
-                <th>NAV</th>
-                <th>Expenses</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ data.date }}</td>
-                <td>{{ data.total_assets }}</td>
-                <td>{{ data.total_liabilities }}</td>
-                <td>{{ data.nav }}</td>
-                <td>{{ data.expenses }}</td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Total Assets</th>
+          <th>Total Liabilities</th>
+          <th>NAV</th>
+          <th>Expenses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ data.date }}</td>
+          <td>{{ data.total_assets }}</td>
+          <td>{{ data.total_liabilities }}</td>
+          <td>{{ data.nav }}</td>
+          <td>{{ data.expenses }}</td>
+        </tr>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>
