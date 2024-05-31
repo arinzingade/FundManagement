@@ -13,3 +13,4 @@ Werkzeug
 email_validator
 certifi
 reportLab
+pdfrw
