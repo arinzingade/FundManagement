@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='dashboard.css') }}"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,10 +16,35 @@
     />
   </head>
   <body>
-    This will be the Dashboard
-    <br />
-    <a href="/dashboard/InvestorRelations"> Investor Relations </a>
-    <br />
-    <a href="/dashboard/transactions"> Transactions </a>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">
+          Zingade <br />
+          Holdings
+        </a>
+        <p class="investment-title">
+          Investment <br />
+          Dashboard
+        </p>
+        <a href="/dashboard/Account" class="username"> {{username_dash}} </a>
+      </nav>
+      <div class = "investor-dashboard"> 
+        Investor <br> Dashboard 
+        <br>
+        <br>
+        <a href = "dashboard/portfolio"> Portfolio </a> <br>
+        <a href = "dashboard/transactions"> Transactions </a> <br>
+        <a href = "dashboard/Account"> Account </a> <br>
+      </div>
+      <div class = "fund-dashboard"> 
+        Fund <br> Dashboard <br> <br>
+        <a href = "dashboard/fundData"> Data Analytics </a> <br>
+      </div>
+      <div class="footer">
+        <div class="logout-div">
+          <a href="/" class="logout"> LogOut </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

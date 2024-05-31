@@ -1,0 +1,118 @@
+
+body {
+    background-color: #101010;
+}
+
+.container {
+    display: grid;
+    height: 96vh;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1fr 0.7fr 6.3fr 1fr;
+    grid-template-areas: 
+    "nav nav"
+    "inv funddash"
+    "inv funddash"
+    "footer footer";
+    grid-gap: 2%;
+}
+
+nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5%;    
+}
+
+.logo, .investment-title, 
+.username, .investor-dashboard, .fund-dashboard, .investor-dashboard a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1.1vw;
+    text-decoration: none;
+    text-decoration: none;
+}
+
+.footer {
+    grid-area: footer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5.3%;
+}
+
+.logout-div a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size:1.1vw;
+    text-decoration: none;
+    font-weight: 350;
+    transition: 0.2s;
+}
+
+.logout-div a:hover {
+    background: linear-gradient(to left, #200A43, #272140);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 17% 17%;
+
+}
+
+.investor-dashboard{
+    grid-area: inv;
+    background: linear-gradient(to right, #8f81a8, #272140);
+    margin-left: 25%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 20px;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.fund-dashboard{
+    grid-area: funddash;
+    background: linear-gradient(to left, #ffa600cc, #402121);
+    margin-right: 25%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 20px;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.investor-dashboard, .fund-dashboard {
+    font-size: 2.5rem;
+    font-weight: 200;
+}
+
+
+.investor-dashboard a:hover {
+    background: linear-gradient(to left, #8f81a8, #272140ac);
+    padding: 1% 1%;
+    border-radius: 10px;
+    font-weight: 600;
+    padding-right: 5%;
+    width: fit-content;
+}
+
+.fund-dashboard a:hover {
+    background: linear-gradient(to right, #ffa6006d, #650a0a);
+    padding: 1% 1%;
+    border-radius: 10px;
+    font-weight: 600;
+    padding-right: 5%;
+    width: fit-content;
+}
+
+.investor-dashboard a, .fund-dashboard a {
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    color: #dedede;
+    font-size: 1.1vw;
+    text-decoration: none;
+    font-weight: 350;
+    transition: 0.2s;
+}
