@@ -209,7 +209,7 @@ a.portfolio {
 .total-invested, .total-profit, .total-return{
     border-radius: 20px;
     padding-bottom: 5%;
-    background: linear-gradient(to right, #180F3D, #09070D);
+    background: linear-gradient(to right, #180F3D, #09070D); 
     padding: 1% 1%;
     font-weight: 525;
     padding-left: 5%;
