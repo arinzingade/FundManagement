@@ -259,7 +259,7 @@ def portfolio():
     
     ## Total Profit = Unrealised + Realised
     ## Remember to make it interactive so they can bifurcate
-    total_profit = 781245612
+    
     
     ## Total Returns = Latest NAV/Average NAV - 1
     latest_doc = db.fund.find_one(sort = [('date', -1)])
@@ -281,6 +281,11 @@ def portfolio():
         total_return = 0
     
     numbConv = NumberConv()
+    up = UpdateNAVdata()
+    info_list = up.update_nav(user_account, latest_nav)
+    unsettel = info_list[0]
+    settel = info_list[1]
+    total_profit = unsettel + settel
     total_invested_formatted = numbConv.numConv(total_invested,0)
     total_profit_formatted = numbConv.numConv(abs(total_profit),0)
     total_return_formatted = round(total_return,2)*100
