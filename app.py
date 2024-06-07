@@ -31,6 +31,7 @@ fund_info = db['fund']
 transaction_info = db['transactions']
 nav_info = db['nav']
 settle_info = db['settle']
+bond_info = db['bonds']
 
 existing_doc = office_collection.find_one({'username': 'eagles007'})
 if existing_doc is None:
@@ -233,12 +234,26 @@ def client_update():
         shares = round(amount / price, 2) 
         rate = bondForm.rate.data
         tenure = bondForm.tenure.data
-        
 
+        try:
+            bond_info.insert_one({
+                'client': client,
+                'date': date,
+                'type': type,
+                'price': price,
+                'qty': shares,
+                'amount': round(amount,2),
+                'rate':rate,
+                'tenure': tenure
+            })
+            
+            flash("Transaction Information added successfully!", 'success')
+        except Exception as e:
+            flash(f"Error inserting data into MongoDB: {e}", 'error')
         
 
     return render_template('clientUpdate.html', transForm=transForm, navform = navform, 
-                           settleForm = setForm, bondForm = BondForm)
+                           settleForm = setForm, bondForm = bondForm)
 
 # Dashboard
 @appFlask.route('/dashboard')
