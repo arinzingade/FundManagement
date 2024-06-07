@@ -76,3 +76,16 @@ class DailyPnL(FlaskForm):
     
     date = DateField('Date', validators = [DataRequired()])
     realised = FloatField('Realised', validators=[DataRequired()])
+
+class BondForm(FlaskForm):
+    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    
+    date = DateField('Date', validators=[DataRequired()])
+    client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
+    type = SelectField('Type', choices = [('Issue', 'Issue')], validators=[DataRequired()])
+    price = FloatField('price', validators=[DataRequired()])
+    amount = FloatField('amount', validators=[DataRequired()])
+    rate = FloatField('rate in %', validators=[DataRequired()])
+    tenure = FloatField('tenure in months', validators=[DataRequired()])
+    submit = SubmitField('submit')    
+

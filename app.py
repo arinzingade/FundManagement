@@ -11,7 +11,7 @@ from urllib.parse import quote_plus
 import os
 
 
-from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm
+from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested
 from charts import LineCharts
 from docker import clientLinkClass
@@ -160,6 +160,7 @@ def client_update():
     
     navform = navForm()
     setForm = settleForm()
+    bondForm = BondForm()
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     latest_nav = latest_doc['nav']
   
@@ -217,12 +218,27 @@ def client_update():
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'error')
+
     
-    if setForm.validate_on_submit():
-        total_settled_amount = 0
+    
+    if bondForm.validate_on_submit():
+        date = bondForm.date.data
+        date_to_insert = datetime(date.year, date.month, date.day)
+        date = date_to_insert.strftime("%Y-%m-%d")
+        
+        client = bondForm.client.data
+        type = bondForm.type.data
+        price = bondForm.price.data
+        amount = bondForm.amount.data
+        shares = round(amount / price, 2) 
+        rate = bondForm.rate.data
+        tenure = bondForm.tenure.data
         
 
-    return render_template('clientUpdate.html', transForm=transForm, navform = navform, settleForm = setForm)
+        
+
+    return render_template('clientUpdate.html', transForm=transForm, navform = navform, 
+                           settleForm = setForm, bondForm = BondForm)
 
 # Dashboard
 @appFlask.route('/dashboard')
