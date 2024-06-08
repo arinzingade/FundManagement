@@ -249,7 +249,7 @@ def client_update():
             
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
-            flash(f"Error inserting data into MongoDB: {e}", 'error')
+            flash(f"Error inserting data into MongoDB: {e}", 'errorr')
         
 
     return render_template('clientUpdate.html', transForm=transForm, navform = navform, 
