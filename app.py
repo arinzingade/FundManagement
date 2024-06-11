@@ -14,7 +14,7 @@ import os
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested
 from charts import LineCharts
-from docker import clientLinkClass
+from dockerpy import clientLinkClass
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
@@ -234,17 +234,22 @@ def client_update():
         shares = round(amount / price, 2) 
         rate = bondForm.rate.data
         tenure = bondForm.tenure.data
+        due = amount*(rate / 100)
+        tranches = tenure / 3
 
         try:
             bond_info.insert_one({
-                'client': client,
                 'date': date,
+                'client': client,
                 'type': type,
                 'price': price,
                 'qty': shares,
                 'amount': round(amount,2),
                 'rate':rate,
-                'tenure': tenure
+                'tenure': tenure,
+                'paid': 0,
+                'due': due,
+                'tranches': tranches
             })
             
             flash("Transaction Information added successfully!", 'success')

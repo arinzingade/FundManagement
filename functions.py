@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import pandas as pd
 import numpy as np
 
-from docker import clientLinkClass
+from dockerpy import clientLinkClass
 
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, PageTemplate, Frame
@@ -81,9 +81,7 @@ class UpdateNAVdata:
                         remaining_qty = q[idx]['remaining_qty'] - curr_qty
                         counter_qty += curr_qty
                         sold_price += q[idx]['price']*curr_qty
-                        print("Curr qty: ", curr_qty)
                         realised += curr_qty*(latest_nav - q[idx]['price'])
-                        print("realised 1: ", realised)
                         curr_qty = 0
                         q[idx]['remaining_qty'] = remaining_qty
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': round(remaining_qty,2)}})
@@ -93,7 +91,6 @@ class UpdateNAVdata:
                         counter_qty += q[idx]['qty']
                         sold_price += q[idx]['price']*q[idx]['qty']
                         realised += q[idx]['remaining_qty']*(latest_nav - q[idx]['price'])
-                        print("realised 2: ", realised)
                         q[idx]['qty'] = 0
                         nav_info.update_one({'_id': q[idx]['_id']}, {'$set': {'remaining_qty': 0}})
                         
@@ -109,7 +106,6 @@ class UpdateNAVdata:
         total_realised = 0
         for elem in docs:
             if elem['type'] == 'BUY' and elem['client'] == username:
-                print(latest_nav)
                 remaining = elem['remaining_qty']
                 price = elem['price']
                 unrealised = remaining*(latest_nav - price)

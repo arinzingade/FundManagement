@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, FloatField, SelectField, DateField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from pymongo import MongoClient
-from docker import clientLinkClass
+from dockerpy import clientLinkClass
 import email_validator
 
 ck = clientLinkClass()
@@ -82,7 +82,7 @@ class BondForm(FlaskForm):
     
     date = DateField('Date', validators=[DataRequired()])
     client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
-    type = SelectField('Type', choices = [('Issue', 'Issue')], validators=[DataRequired()])
+    type = SelectField('Type', choices = [('ISSUE', 'ISSUE'), ('PAYMENT', 'PAYMENT')], validators=[DataRequired()])
     price = FloatField('price', validators=[DataRequired()])
     amount = FloatField('amount', validators=[DataRequired()])
     rate = FloatField('rate in %', validators=[DataRequired()])
