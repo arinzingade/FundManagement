@@ -21,6 +21,7 @@ db = client['mydatabase']
 nav_info = db['nav']
 transaction_info = db['transactions']
 fund_info = db['fund']
+bond_info = db['bonds']
 
 latest_doc = db.fund.find_one(sort = [('date', -1)])
 if latest_doc:
@@ -191,10 +192,26 @@ class GenerateData_ForCharts:
         nav = np.array(df['nav'])
         dates = np.array(df['date'])
         return [nav, dates]
-        
-        
-            
-if __name__ == "__main__":
-    
-    gc = GenerateData_ForCharts()
-    gc.GenerateNAVChart()
+
+import logging
+from flask import flash
+
+logging.basicConfig(level=logging.DEBUG)
+
+class BondMaths:
+
+    def CalculateDueBond(self, username, amount):
+        try:
+            cursor = bond_info.find({'client': username})
+            for doc in cursor:
+                if doc['flag'] == 0:
+                    if doc['due'] > 0:
+                        new_due = doc['due'] - amount
+                        new_paid = doc['paid'] + amount
+
+                        bond_info.update_one({'_id': doc['_id']}, {'$set': {'due': new_due, 'paid': new_paid}})
+                        logging.debug(f"Updated due and paid for document {doc['_id']}: new due {new_due}, new paid {new_paid}")
+
+        except Exception as e:
+            logging.error(f"Error updating bond info for client {username}: {e}")
+            flash(f"Error updating bond info for client {username}: {e}", 'error')

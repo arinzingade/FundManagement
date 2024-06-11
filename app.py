@@ -12,7 +12,7 @@ import os
 
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
-from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested
+from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested, BondMaths
 from charts import LineCharts
 from dockerpy import clientLinkClass
 
@@ -229,29 +229,34 @@ def client_update():
         
         client = bondForm.client.data
         type = bondForm.type.data
-        price = bondForm.price.data
         amount = bondForm.amount.data
-        shares = round(amount / price, 2) 
         rate = bondForm.rate.data
         tenure = bondForm.tenure.data
         due = amount*(rate / 100)
         tranches = tenure / 3
+        flag = 0
+
+        if type == 'PAYMENT':
+            flag = 1
 
         try:
             bond_info.insert_one({
                 'date': date,
                 'client': client,
                 'type': type,
-                'price': price,
-                'qty': shares,
                 'amount': round(amount,2),
                 'rate':rate,
                 'tenure': tenure,
                 'paid': 0,
                 'due': due,
-                'tranches': tranches
-            })
-            
+                'tranches': tranches,
+                'flag': flag
+            })  
+        
+            if type == 'PAYMENT': 
+                BondMaths.CalculateDueBond(client, amount)
+        
+        
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'errorr')

@@ -35,21 +35,12 @@
       <div>{{ bondForm.date.label }} {{ bondForm.date()}}</div>
       <div>{{ bondForm.client.label }} {{ bondForm.client()}}</div>
       <div>{{ bondForm.type.label }} {{ bondForm.type() }}</div>
-      <div>{{ bondForm.price.label }} {{ bondForm.price() }}</div>
       <div>{{ bondForm.amount.label }} {{ bondForm.amount() }}</div>
       <div>{{ bondForm.rate.label }} {{ bondForm.rate() }}</div>
       <div>{{ bondForm.tenure.label }} {{ bondForm.tenure() }}</div>
       <div>{{ bondForm.submit }}</div>
     </form>
-
-    <br />
-    <form method="POST" onsubmit="return preventSubmit()">
-      {{settleForm.hidden_tag()}}
-      <div>
-        {{ settleForm.settle_confirm.label }} {{settleForm.settle_confirm()}}
-      </div>
-      <div>{{settleForm.submit}}</div>
-    </form>
+    
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %}
