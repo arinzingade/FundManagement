@@ -193,25 +193,38 @@ class GenerateData_ForCharts:
         dates = np.array(df['date'])
         return [nav, dates]
 
-import logging
-from flask import flash
-
-logging.basicConfig(level=logging.DEBUG)
-
 class BondMaths:
 
-    def CalculateDueBond(self, username, amount):
-        try:
-            cursor = bond_info.find({'client': username})
-            for doc in cursor:
-                if doc['flag'] == 0:
-                    if doc['due'] > 0:
-                        new_due = doc['due'] - amount
-                        new_paid = doc['paid'] + amount
+    def UpdateDueBonds(self, username, amount):
+        cursor = bond_info.find({'client': username})
+        
+        docs = list(cursor)
+        
+        for doc in docs:
+            if doc['flag'] == 0:
+                if doc['due'] > 0:
+                    new_due = doc['due'] - amount
+                    new_paid = doc['paid'] + amount
+                    bond_info.update_one({'_id': doc['_id']}, 
+                                         {'$set': {'paid': new_paid, 'due': new_due}})
+                    
+                    if (new_due > 0):
+                        break
+                    else:
+                        amount = -1*(new_due)
+                        bond_info.update_one({'_id': doc['_id']}, 
+                                         {'$set': {'paid': new_paid - amount, 'due': 0}})
+                        
+                        continue
+    
+    def CalculateDueBond(self, username):
+        cursor = bond_info.find({'client' : username})
+        docs = list(cursor)
 
-                        bond_info.update_one({'_id': doc['_id']}, {'$set': {'due': new_due, 'paid': new_paid}})
-                        logging.debug(f"Updated due and paid for document {doc['_id']}: new due {new_due}, new paid {new_paid}")
-
-        except Exception as e:
-            logging.error(f"Error updating bond info for client {username}: {e}")
-            flash(f"Error updating bond info for client {username}: {e}", 'error')
+        total_due = 0
+        total_paid = 0
+        for doc in docs:
+            if (doc['flag'] == 0):
+                total_due += doc['due']
+            
+        return [total_due, total_paid]

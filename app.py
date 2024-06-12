@@ -162,6 +162,7 @@ def client_update():
     navform = navForm()
     setForm = settleForm()
     bondForm = BondForm()
+    bondMaths = BondMaths()
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     latest_nav = latest_doc['nav']
   
@@ -238,6 +239,9 @@ def client_update():
 
         if type == 'PAYMENT':
             flag = 1
+            print(client)
+            print(amount)
+            bondMaths.UpdateDueBonds(client, amount)
 
         try:
             bond_info.insert_one({
@@ -252,11 +256,7 @@ def client_update():
                 'tranches': tranches,
                 'flag': flag
             })  
-        
-            if type == 'PAYMENT': 
-                BondMaths.CalculateDueBond(client, amount)
-        
-        
+                
             flash("Transaction Information added successfully!", 'success')
         except Exception as e:
             flash(f"Error inserting data into MongoDB: {e}", 'errorr')
@@ -297,6 +297,7 @@ def portfolio():
     
     totalInvestedConst = TotalInvested(transaction_info, user_account)
     total_invested = totalInvestedConst.total_invested()
+    print(total_invested)
     
     ## Total Profit = Unrealised + Realised
     ## Remember to make it interactive so they can bifurcate
@@ -402,25 +403,30 @@ def account():
 
         
         ap = AveragePrice()
-        info_price = ap.average_price(arr)
-        
         up = UpdateNAVdata()
-    
+        bm = BondMaths()
+        
+        info_price = ap.average_price(arr)
         weighted_price = round(info_price[0],2)
         total_shares = info_price[1]
         info_list = up.update_nav(user_account, latest_nav)
         unsettel = info_list[0]
         settel = info_list[1]
         withdraw = unsettel + total_shares*weighted_price
+        bond_due = bm.CalculateDueBond(user_account)[0]
+
         
         unrealised_formatted = '{:,.0f}'.format(round(unsettel))
         realised_formatted = '{:,.0f}'.format(round(settel))
         withdraw_formatted = '{:,.0f}'.format(round(withdraw))
+        bond_due_formatted = '{:,.0f}'.format(round(bond_due))
         
     data = nav_info.find({'client' : user_account})
+    bond_data = bond_info.find({'client' : user_account})
     
     return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
-                                            withdraw = withdraw_formatted, setteled = realised_formatted, data = data)
+                                            withdraw = withdraw_formatted, setteled = realised_formatted, data = data,
+                                            bond_due = bond_due_formatted, bond_data = bond_data)
 
 

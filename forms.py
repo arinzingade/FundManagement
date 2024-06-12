@@ -84,7 +84,7 @@ class BondForm(FlaskForm):
     client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
     type = SelectField('Type', choices = [('ISSUE', 'ISSUE'), ('PAYMENT', 'PAYMENT')], validators=[DataRequired()])
     amount = FloatField('amount', validators=[DataRequired()])
-    rate = FloatField('rate in %', validators=[DataRequired()])
-    tenure = FloatField('tenure in months', validators=[DataRequired()])
+    rate = FloatField('rate in %')
+    tenure = FloatField('tenure in months')
     submit = SubmitField('submit')    
 

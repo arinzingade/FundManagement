@@ -71,9 +71,9 @@
               <span class="sub-heads">Unrealised Amount</span><br />
               <span style="font-size: 175%"> ₹ {{ unsettel }} </span>
             </a>
-            <a href="/" class="avg-nav">
+            <a href="#" class="avg-nav" onclick="toggle()">
               <span class="sub-heads">Due Bond Payments</span><br />
-              <span style="font-size: 175%"> ₹ {{ total_shares }} </span>
+              <span style="font-size: 175%"> ₹ {{ bond_due }} </span>
             </a>
           </div>
           <div class="report-1-link">
@@ -88,7 +88,8 @@
         </div>
       </div>
     </div>
-    <div id="popup">
+
+    <div id="nav-popup">
       <div class="nav-info-head">
         <h1>Statement of Net Asset Value</h1>
       </div>
@@ -125,22 +126,66 @@
       <br />
       <div class="footer-pop">
         <div class="close-link">
-          <a href="#" onclick="toggle()">Close</a>
+          <a href="#" onclick="toggle('nav-popup')">Close</a>
         </div>
         <div class="close-link">
-          <a href="#" onclick="toggle()">Download </a>
+          <a href="#" onclick="toggle('nav-popup')">Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="bond-popup">
+      <div class="bond-info-head">
+        <h1>Statement of Bond Transactions</h1>
+      </div>
+      <div class="table-container">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Rate</th>
+              <th>Tenure</th>
+              <th>Due</th>
+              <th>Paid</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in bond_data %}
+            <tr>
+              <td style="width: 7em">{{ item.date }}</td>
+              <td style="width: 2em">{{ item.type }}</td>
+              <td>{{ item.amount }}</td>
+              <td>{{ item.rate }}</td>
+              <td>{{ item.tenure }}</td>
+              <td>{{ item.due }}</td>
+              <td>{{ item.paid }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="footer-pop">
+        <div class="close-link">
+          <a href="#" onclick="toggle('bond-popup')">Close</a>
+        </div>
+        <div class="close-link">
+          <a href="#" onclick="toggle('bond-popup')">Download</a>
         </div>
       </div>
     </div>
 
     <script type="text/javascript">
-      function toggle() {
+      function toggle(popupId) {
         var blur = document.getElementById("blur");
         blur.classList.toggle("active");
-
-        var popup = document.getElementById("popup");
+    
+        var popup = document.getElementById(popupId);
         popup.classList.toggle("active");
       }
     </script>
+    
   </body>
 </html>

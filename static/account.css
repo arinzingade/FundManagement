@@ -212,7 +212,7 @@ a.Account {
 }
 
 
-#popup {
+#nav-popup {
     visibility: hidden;
     opacity: 0;
     transition: 0.1s;
@@ -223,14 +223,14 @@ a.Account {
     height: 80vh;
 }
 
-#popup.active {
+#nav-popup.active {
     visibility: visible;
     opacity: 1;
     transition: 0.5s;
     height: 96vh;
 }
 
-#popup table {
+#nav-popup table {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
@@ -241,18 +241,18 @@ a.Account {
     background-color: #101010ac;
 }
 
-#popup table, #popup th, #popup td {
+#nav-popup table, #nav-popup th, #nav-popup td {
     border-color: #9e9e9ed2; 
     border-style: groove;
     border-width: 2px; 
 }
 
-#popup th, #popup td {
+#nav-popup th, #nav-popup td {
     padding: 8px;
     text-align: center;
 }
 
-#popup th {
+#nav-popup th {
     position: sticky;
     top: 0px;
     background: #0c001d;
