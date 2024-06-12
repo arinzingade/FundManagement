@@ -10,7 +10,6 @@ body {
     user-select: none;
 }
 
-
 .container {
     display: grid;
     height: 96vh;
@@ -211,8 +210,7 @@ a.Account {
     margin-top: -1.2%;
 }
 
-
-#nav-popup {
+#nav-popup, #bond-popup {
     visibility: hidden;
     opacity: 0;
     transition: 0.1s;
@@ -221,16 +219,21 @@ a.Account {
     left: 50%;
     transform: translate(-50%, -50%);
     height: 80vh;
-}
+  }
 
-#nav-popup.active {
+  #nav-popup.active, #bond-popup.active {
     visibility: visible;
     opacity: 1;
     transition: 0.5s;
     height: 96vh;
-}
+  }
 
-#nav-popup table {
+  #blur.active {
+    filter: blur(5px);
+    transition: filter 0.1s;
+  }
+
+  #nav-popup table, #bond-popup table {
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
@@ -239,34 +242,33 @@ a.Account {
     font-weight: 300;
     border-collapse: collapse;
     background-color: #101010ac;
-}
+  }
 
-#nav-popup table, #nav-popup th, #nav-popup td {
-    border-color: #9e9e9ed2; 
+  #nav-popup table, #nav-popup th, #nav-popup td,
+  #bond-popup table, #bond-popup th, #bond-popup td {
+    border-color: #9e9e9ed2;
     border-style: groove;
-    border-width: 2px; 
-}
+    border-width: 2px;
+  }
 
-#nav-popup th, #nav-popup td {
+  #nav-popup th, #nav-popup td,
+  #bond-popup th, #bond-popup td {
     padding: 8px;
     text-align: center;
-}
+  }
 
-#nav-popup th {
+  #nav-popup th,
+  #bond-popup th {
     position: sticky;
     top: 0px;
     background: #0c001d;
-    z-index: 1;
-    border-style: groove; 
-    border-width: 2px; 
-}
+  }
 
-
-.nav-info-head {
+  .nav-info-head, .bond-info-head {
     font-size: 1.1vw;
-}
+  }
 
-.close-link a{
+  .close-link a {
     width: fit-content;
     background: linear-gradient(to right, rgb(24, 15, 61), #09070D);
     border-radius: 12px;
@@ -274,21 +276,25 @@ a.Account {
     font-weight: 350;
     padding: 7% 7%;
     display: flex;
-}
+  }
 
-.table-container {
+  .table-container {
     height: 80%;
     overflow-y: scroll;
     width: 103%;
-    
-}
+  }
 
+  #blur.active {
+    filter: blur(5px);
+  }
+  
 ::-webkit-scrollbar-track {
     background-color: #101010;
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to left, #8376b1, #472481);
+    background: linear-gradient(to left, #8775c6, #472481);
     border-radius: 10px;
 }
 

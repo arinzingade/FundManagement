@@ -57,7 +57,7 @@
             </a>
           </div>
           <div class="report-1-link">
-            <a href="#" onclick="toggle()"> View Detailed NAV Report </a>
+            <a href="#" onclick="toggle('nav-popup')"> View Detailed NAV Report </a>
           </div>
         </div>
         <div class="settlement-statement">
@@ -71,7 +71,7 @@
               <span class="sub-heads">Unrealised Amount</span><br />
               <span style="font-size: 175%"> ₹ {{ unsettel }} </span>
             </a>
-            <a href="#" class="avg-nav" onclick="toggle()">
+            <a href="#" class="avg-nav" onclick="toggle('bond-popup')">
               <span class="sub-heads">Due Bond Payments</span><br />
               <span style="font-size: 175%"> ₹ {{ bond_due }} </span>
             </a>
@@ -135,7 +135,7 @@
     </div>
 
     <div id="bond-popup">
-      <div class="bond-info-head">
+      <div class="nav-info-head">
         <h1>Statement of Bond Transactions</h1>
       </div>
       <div class="table-container">
