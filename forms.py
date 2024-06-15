@@ -58,10 +58,12 @@ class TransactionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class navForm(FlaskForm):
-    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    def __init__(self, client_choices, *args, **kwargs):
+        super(navForm, self).__init__(*args, **kwargs)
+        self.client.choices = client_choices
     
     date = DateField('Date', validators=[DataRequired()])
-    client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
+    client = SelectField('Client', validators=[DataRequired()])
     type = SelectField('Type', choices = [('BUY', 'BUY'), ('SELL', 'SELL')], validators=[DataRequired()])
     price = FloatField('price', validators=[DataRequired()])
     amount = FloatField('amount', validators=[DataRequired()])
@@ -78,10 +80,12 @@ class DailyPnL(FlaskForm):
     realised = FloatField('Realised', validators=[DataRequired()])
 
 class BondForm(FlaskForm):
-    client_choices = [(user['username'], user['username']) for user in users_collection.find({}, {'username' : 1})]
+    def __init__(self, client_choices, *args, **kwargs):
+        super(BondForm, self).__init__(*args, **kwargs)
+        self.client.choices = client_choices
     
     date = DateField('Date', validators=[DataRequired()])
-    client = SelectField('Client', choices = client_choices, validators=[DataRequired()])
+    client = SelectField('Client', validators=[DataRequired()])
     type = SelectField('Type', choices = [('ISSUE', 'ISSUE'), ('PAYMENT', 'PAYMENT')], validators=[DataRequired()])
     amount = FloatField('amount', validators=[DataRequired()])
     rate = FloatField('rate in %')

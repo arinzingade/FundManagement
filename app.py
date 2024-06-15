@@ -158,10 +158,10 @@ def client_update():
     client_choices = [(user['username'], user['username']) for user in users]
     
     transForm = TransactionForm(client_choices)
+    bondForm = BondForm(client_choices)
+    navform = navForm(client_choices)
     
-    navform = navForm()
     setForm = settleForm()
-    bondForm = BondForm()
     bondMaths = BondMaths()
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     latest_nav = latest_doc['nav']
@@ -241,6 +241,7 @@ def client_update():
             flag = 1
             print(client)
             print(amount)
+            due = 0
             bondMaths.UpdateDueBonds(client, amount)
 
         try:
@@ -336,14 +337,16 @@ def portfolio():
                            total_invested_formatted = total_invested_formatted, total_return_formatted=total_return_formatted, 
                            profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted)
 
+from bson import json_util
+
 @appFlask.route('/dashboard/HedgeFund')
 def hedgeFund():
     user_account = request.cookies.get('username')
     
-    nav_chart = LineCharts.NavChart()
-    nav_chartJSON = json.dumps(nav_chart, cls = plotly.utils.PlotlyJSONEncoder)
+    nav = list(nav_info.find())
+    nav_data_json = json.dumps(nav, default=json_util.default)
     
-    return render_template("hedgeFund.html", user_account = user_account, nav_chart = nav_chartJSON)
+    return render_template("hedgeFund.html", user_account = user_account, nav_data_json = nav_data_json)
 
 @appFlask.route('/dashboard/Markets')
 def Markets():
@@ -378,20 +381,28 @@ def account():
     withdraw = 0
     unsettel = 0
     settel = 0
+    bond_due = 0
     
     latest_doc = db.fund.find_one(sort = [('date', -1)])
     if latest_doc:
         latest_nav = latest_doc['nav']
     else:
         latest_nav = 0
-        
+    
+
     if (nav_info.count_documents({'client': user_account}) == 0):
         print(nav_info.count_documents({'username': user_account}))
         print('fail')
+        bm = BondMaths()
+        bond_due = bm.CalculateDueBond(user_account)[0]
+        bond_due_formatted = '{:,.0f}'.format(round(bond_due))
+        bond_data = bond_info.find({'client' : user_account})
+
         return render_template('account.html', user_account = user_account, total_shares = round(total_shares,2),
                                             weighted_price = round(weighted_price,2), unsettel = round(unsettel,2),
-                                            withdraw = round(withdraw, 2), setteled = round(settel, 2))
-    
+                                            withdraw = round(withdraw, 2), setteled = round(settel, 2),  bond_due = bond_due_formatted,
+                                            bond_data = bond_data)
+
     else: 
         arr = []
         for docs in nav_info.find({'client' : user_account}):
