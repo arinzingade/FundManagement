@@ -33,6 +33,9 @@ class AveragePrice:
     
     def average_price(self, arr = [("type", "qty", "price")]):
         q = deque()
+        if (len(arr) == 0):
+            return (0,0)
+        
         for transaction in arr:
             type, qty, price = transaction
             if type == "BUY":
@@ -63,6 +66,7 @@ class UpdateNAVdata:
     def update_nav(self, username, latest_nav):
         q = deque()
         docs = nav_info.find({'client': username}).sort([('_id', 1)])
+        
         for elem in docs:
             if elem['type'] == 'BUY':
                 q.append(elem)     
@@ -152,6 +156,8 @@ class TotalInvested:
     
     def total_invested(self):
         total_invested = 0
+        docs = (transaction_info.find({'client' : self.username}))
+    
         for elem in self.transactionData:
             if elem['particular'] == 'DEPOSIT':
                 total_invested += elem['credit']
