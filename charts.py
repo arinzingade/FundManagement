@@ -4,13 +4,15 @@ import plotly.graph_objects as go
 import plotly.io as pio
 from flask import Flask, render_template
 import pandas as pd
-
+from pymongo import MongoClient
 from functions import GenerateData_ForCharts
-from dockerpy import clientLinkClass
+from config import Config
+# Flask App
+appFlask = Flask(__name__, static_folder = 'static')
+appFlask.config.from_object(Config)
 
-
-ck = clientLinkClass()
-client = ck.clientLink(True)
+# Mongo Client
+client = MongoClient(appFlask.config['MONGO_URI'])
 db = client['mydatabase']
 fund_info = db['fund']
 
