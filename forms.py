@@ -3,11 +3,16 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, FloatField, SelectField, DateField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from pymongo import MongoClient
-from dockerpy import clientLinkClass
+from config import Config
 import email_validator
+from flask import Flask
 
-ck = clientLinkClass()
-client = ck.clientLink(True)
+# Flask App
+appFlask = Flask(__name__, static_folder = 'static')
+appFlask.config.from_object(Config)
+
+# Mongo Client
+client = MongoClient(appFlask.config['MONGO_URI'])
 
 db = client['mydatabase']
 users_collection = db['users']

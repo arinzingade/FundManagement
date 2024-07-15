@@ -14,15 +14,15 @@ import os
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested, BondMaths
 from charts import LineCharts
-from dockerpy import clientLinkClass
+from config import Config
 
 # Flask App
 appFlask = Flask(__name__, static_folder = 'static')
-appFlask.config['SECRET_KEY'] = "mysecretkey"
+appFlask.config.from_object(Config)
 
 # Mongo Client
-ck = clientLinkClass()
-client = ck.clientLink(True)
+client = MongoClient(appFlask.config['MONGO_URI'])
+print(client)
 
 db = client['mydatabase']
 users_collection = db['users']
@@ -72,6 +72,7 @@ def signup():
             'password': password,
             'hashed_pass': hashed_pass
         }
+        
         users_collection.insert_one(user_data)
         return redirect(url_for('login'))
 

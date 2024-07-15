@@ -4,8 +4,6 @@ from pymongo import MongoClient
 import pandas as pd
 import numpy as np
 
-from dockerpy import clientLinkClass
-
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, PageTemplate, Frame
 from reportlab.lib import colors
@@ -14,8 +12,15 @@ from reportlab.platypus import Paragraph
 from pdfrw import PdfReader, PageMerge, PdfWriter
 import PyPDF2
 
-ck = clientLinkClass()
-client = ck.clientLink(True)
+from flask import Flask
+from config import Config
+# Flask App
+
+appFlask = Flask(__name__, static_folder = 'static')
+appFlask.config.from_object(Config)
+
+# Mongo Client
+client = MongoClient(appFlask.config['MONGO_URI'])
 db = client['mydatabase']
 
 nav_info = db['nav']
