@@ -22,7 +22,6 @@ appFlask.config.from_object(Config)
 
 # Mongo Client
 client = MongoClient(appFlask.config['MONGO_URI'])
-print(client)
 
 db = client['mydatabase']
 users_collection = db['users']
@@ -240,8 +239,6 @@ def client_update():
 
         if type == 'PAYMENT':
             flag = 1
-            print(client)
-            print(amount)
             due = 0
             bondMaths.UpdateDueBonds(client, amount)
 
@@ -299,7 +296,6 @@ def portfolio():
     
     totalInvestedConst = TotalInvested(transaction_info, user_account)
     total_invested = totalInvestedConst.total_invested()
-    print(total_invested)
     
     ## Total Profit = Unrealised + Realised
     ## Remember to make it interactive so they can bifurcate
@@ -336,7 +332,7 @@ def portfolio():
     
     return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
                            total_invested_formatted = total_invested_formatted, total_return_formatted=total_return_formatted, 
-                           profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted)
+                           profit_integer_part = total_profit, total_profit_formatted = total_profit_formatted, current_nav = latest_nav)
 
 from bson import json_util
 
@@ -392,8 +388,6 @@ def account():
     
 
     if (nav_info.count_documents({'client': user_account}) == 0):
-        print(nav_info.count_documents({'username': user_account}))
-        print('fail')
         bm = BondMaths()
         bond_due = bm.CalculateDueBond(user_account)[0]
         bond_due_formatted = '{:,.0f}'.format(round(bond_due))

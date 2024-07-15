@@ -96,4 +96,3 @@ class BondForm(FlaskForm):
     rate = FloatField('rate in %')
     tenure = FloatField('tenure in months')
     submit = SubmitField('submit')    
-
