@@ -32,13 +32,6 @@ nav_info = db['nav']
 settle_info = db['settle']
 bond_info = db['bonds']
 
-existing_doc = office_collection.find_one({'username': 'eagles007'})
-if existing_doc is None:
-    office_collection.insert_one({
-        'username': 'eagles007',
-        'password': bcrypt.hashpw(b'TheRouge@01', bcrypt.gensalt())
-    })
-
 
 # Flask Routes
 @appFlask.route('/')
