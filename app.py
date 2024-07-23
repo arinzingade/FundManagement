@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, session, flash, request, make_response
+from flask import Flask, jsonify, render_template, url_for, redirect, session, flash, request, make_response
 from pymongo import MongoClient, DESCENDING
 import bcrypt
 from datetime import datetime
@@ -9,6 +9,7 @@ import plotly.express as px
 import plotly.io as pio
 from urllib.parse import quote_plus
 import os
+import logging
 
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
@@ -321,7 +322,7 @@ def portfolio():
     total_profit = unsettel + settel
     total_invested_formatted = numbConv.numConv(total_invested,0)
     total_profit_formatted = numbConv.numConv(abs(total_profit),0)
-    total_return_formatted = round(total_return,2)*100
+    total_return_formatted = round(total_return*100,2)
     
     return render_template("portfolio.html", user_account=user_account, total_profit = total_profit, 
                            total_invested_formatted = total_invested_formatted, total_return_formatted=total_return_formatted, 
@@ -423,5 +424,56 @@ def account():
                                             weighted_price = weighted_price, unsettel = unrealised_formatted,
                                             withdraw = withdraw_formatted, setteled = realised_formatted, data = data,
                                             bond_due = bond_due_formatted, bond_data = bond_data)
+
+
+@appFlask.route("/api/transaction/buy", methods=['POST'])
+def transaction():
+    data = request.get_json()
+    if not data or 'type' not in data or 'amount' not in data:
+        return jsonify({'error': 'Missing data'}), 400
+
+    latest_doc = fund_info.find_one(sort=[('date', -1)])
+    if not latest_doc:
+        return jsonify({'error': 'No latest NAV found'}), 404
+    latest_nav = latest_doc['nav']
+
+    date_to_insert = "2024-07-01"
+    client_username = request.cookies.get('username')
+    transaction_type = data['type'] 
+    price = latest_nav
+    amount = float(data['amount'])
+    shares = round(amount / price, 2)
+
+    try:
+        transaction_record = {
+            'client': client_username,
+            'date': date_to_insert,
+            'type': transaction_type,
+            'price': price,
+            'qty': shares,
+            'remaining_qty': shares,
+            'amount': round(amount, 2),
+            'realised': 0,
+            'unrealised': 0,
+            'checked': 0,
+            'sold_at': 0
+        }
+
+        transaction_info.insert_one({
+            'date': date_to_insert,
+            'client': client_username,
+            'particular': "DEPOSIT",
+            'type': "NETBANKING",
+            'debit': 0,
+            'credit': round(amount, 2)
+        })
+        result = nav_info.insert_one(transaction_record)
+
+        transaction_record['_id'] = str(result.inserted_id)
+        response = json.loads(json_util.dumps(transaction_record))
+        return jsonify(response), 201 
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
