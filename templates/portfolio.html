@@ -82,9 +82,9 @@
         <div class="invested-container">
           <div class="container-headings-5">Buy / Sell</div>
           <p class = "current_nav"> Current NAV : ₹ {{current_nav}} </p>
-          <input type="number" class = "amount" placeholder="Enter Amount in ₹"> 
-          <button class = "buy-button"> Buy </button>
-          <button class = "sell-button"> Sell </button>
+          <input type="number" class="amount" id="amount-input" placeholder="Enter Amount in ₹">
+          <button class="buy-button" onclick="handleTransactionBuy('BUY')">Buy</button>
+          <button class="sell-button" onclick="handleTransactionSell('SELL')">Sell</button>
         </div>
       </div>
 
@@ -97,75 +97,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      var ctx = document.getElementById("bar-chart").getContext("2d");
-      var gradient1 = ctx.createLinearGradient(400, 0, 400, 400);
-      gradient1.addColorStop(0, "rgb(175,162,45)");
-      gradient1.addColorStop(1, "rgb(223,171,110)");
-
-      var gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
-      gradient2.addColorStop(0, "rgb(52,194,100)");
-      gradient2.addColorStop(1, "rgb(64,154,94)");
-
-      var data = {
-        labels: [""],
-        datasets: [
-          {
-            label: "Invested",
-            data: [100],
-            backgroundColor: gradient1,
-            borderColor: gradient1,
-            borderWidth: 1,
-            barThickness: 110,
-          },
-          {
-            label: "Profit",
-            data: [100],
-            backgroundColor: gradient2,
-            borderColor: gradient2,
-            borderWidth: 1,
-            barThickness: 110,
-          },
-        ],
-      };
-      var options = {
-        indexAxis: "y",
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: false,
-          },
-          datalabels: {
-            anchor: "end",
-            align: "end",
-            color: "black",
-            font: {
-              weight: "bold",
-            },
-            formatter: function (value) {
-              return value;
-            },
-          },
-        },
-        scales: {
-          x: {
-            stacked: true,
-            display: false,
-          },
-          y: {
-            stacked: true,
-          },
-        },
-      };
-
-      var myChart = new Chart(ctx, {
-        type: "bar",
-        data: data,
-        options: options,
-      });
+     function handleTransactionBuy(type) {
+          var amount = document.getElementById("amount-input").value;
+          $.ajax({
+              url: '/api/transaction/buy',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({ type: type, amount: amount }),
+              success: function(response) {
+                  console.log('Transaction successful:', response);
+              },
+              error: function(error) {
+                  console.log('Error making transaction:', error);
+              }
+          });
+        }
     </script>
   </body>
 </html>
