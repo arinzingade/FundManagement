@@ -1,119 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='portfolio.css') }}"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div class="container">
-      <nav>
-        <a href="/" class="logo">
-          Zingade <br />
-          Holdings
-        </a>
-        <p class="investment-title">
-          Investment <br />
-          Dashboard
-        </p>
-        <a href="/dashboard/Account" class="username"> {{user_account}} </a>
-      </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='portfolio.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet" />
+</head>
 
-      <div class="sidebar">
-        <a href="/dashboard/portfolio" class="portfolio">Portfolio</a>
-        <a href="/dashboard//HedgeFund" class="HedgeFund">Hedge Fund</a>
-        <a href="/dashboard/transactions" id="Transactions" class="Transactions"
-          >Transactions</a
-        >
-        <a href="/dashboard/InvestorRelations" class="News">Disclosures</a>
-        <a href="/dashboard/Account" class="Account">Account </a>
-        <a href="/dashboard/Markets" class="settings">Markets</a>
-      </div>
+<body>
+  <div class="container">
+    <nav>
+      <a href="/" class="logo">
+        Zingade <br />
+        Holdings
+      </a>
+      <p class="investment-title">
+        Investment <br />
+        Dashboard
+      </p>
+      <a href="/dashboard/Account" class="username"> {{user_account}} </a>
+    </nav>
 
-      <div class="sub-container">
-        <div class="overview-container">
-          <div class="container-headings-1">Overview</div>
-          <div class="overview-info">
-            <a href="/" class="total-invested">
-              <span class="sub-heads"> Total Invested </span><br />
-              <span style="font-size: 175%">
-                ₹ {{ total_invested_formatted }}</span
-              >
-            </a>
-            <a href="/" class="total-profit">
-              {% if total_profit >= 0 %}
-              <span class="sub-heads"> Total Profit </span><br />
-              <span style="font-size: 175%" class="profit">
-                ₹ {{ total_profit_formatted}}
-              </span>
-              {% else %}
-              <span class="sub-heads"> Total Loss </span><br />
-              <span style="font-size: 175%" class="loss">
-                ₹ {{ total_profit_formatted }}
-              </span>
-              {% endif %}
-            </a>
-            <a href="/" class="total-return">
-              <span class="sub-heads"> Total Return </span><br />
-              <span style="font-size: 175%">
-                {{ total_return_formatted }} %
-              </span>
-            </a>
-          </div>
-          <div class="time-stamps">
-            <a class="time-stamps-links" href="/a"> Select Time Frame </a>
-          </div>
+    <div class="sidebar">
+      <a href="/dashboard/portfolio" class="portfolio">Portfolio</a>
+      <a href="/dashboard//HedgeFund" class="HedgeFund">Hedge Fund</a>
+      <a href="/dashboard/transactions" id="Transactions" class="Transactions">Transactions</a>
+      <a href="/dashboard/InvestorRelations" class="News">Disclosures</a>
+      <a href="/dashboard/Account" class="Account">Account </a>
+      <a href="/dashboard/Markets" class="settings">Markets</a>
+    </div>
+
+    <div class="sub-container">
+      <div class="overview-container">
+        <div class="container-headings-1">Overview</div>
+        <div class="overview-info">
+          <a href="/" class="total-invested">
+            <span class="sub-heads"> Total Invested </span><br />
+            <span style="font-size: 175%">
+              ₹ {{ total_invested_formatted }}</span>
+          </a>
+          <a href="/" class="total-profit">
+            {% if total_profit >= 0 %}
+            <span class="sub-heads"> Total Profit </span><br />
+            <span style="font-size: 175%" class="profit">
+              ₹ {{ total_profit_formatted}}
+            </span>
+            {% else %}
+            <span class="sub-heads"> Total Loss </span><br />
+            <span style="font-size: 175%" class="loss">
+              ₹ {{ total_profit_formatted }}
+            </span>
+            {% endif %}
+          </a>
+          <a href="/" class="total-return">
+            <span class="sub-heads"> Total Return </span><br />
+            <span style="font-size: 175%">
+              {{ total_return_formatted }} %
+            </span>
+          </a>
         </div>
-        <div class="value-container">
-          <div class="container-headings-2">Value</div>
-          <canvas id="bar-chart"></canvas>
-        </div>
-        <div class="invested-container">
-          <div class="container-headings-5">Buy / Sell</div>
-          <p class = "current_nav"> Current NAV : ₹ {{current_nav}} </p>
-          <input type="number" class="amount" id="amount-input" placeholder="Enter Amount in ₹">
-          <button class="buy-button" onclick="handleTransactionBuy('BUY')">Buy</button>
-          <button class="sell-button" onclick="handleTransactionSell('SELL')">Sell</button>
+        <div class="time-stamps">
+          <a class="time-stamps-links" href="/a"> Select Time Frame </a>
         </div>
       </div>
-
-      <div class="footer">
-        <div class="logout-div">
-          <a href="/" class="logout"> LogOut </a>
-        </div>
+      <div class="value-container">
+        <div class="container-headings-2">Value</div>
+        <canvas id="bar-chart"></canvas>
+      </div>
+      <div class="invested-container">
+        <div class="container-headings-5">Buy / Sell</div>
+        <p class="current_nav"> Current NAV : ₹ {{current_nav}} </p>
+        <input type="number" class="amount" id="amount-input" placeholder="Enter Amount in ₹">
+        <button class="buy-button" onclick="handleTransactionBuy('BUY')">Buy</button>
+        <button class="sell-button" onclick="handleTransactionSell('SELL')">Sell</button>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-     function handleTransactionBuy(type) {
-          var amount = document.getElementById("amount-input").value;
+    <div class="footer">
+      <div class="logout-div">
+        <a href="/" class="logout"> LogOut </a>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function handleTransactionBuy(type) {
+      var amount = document.getElementById("amount-input").value;
+      var navPrice = getCurrentNavPrice();
+
+      Swal.fire({
+        title: 'Confirm Transaction',
+        html: `<p style="font-family: Arial, sans-serif; font-size: 16px;">You are about to BUY <strong style="font-family: Arial, sans-serif; font-weight: bold;">${amount} INR</strong> worth of units at a NAV price of <strong style="font-family: Arial, sans-serif; font-weight: bold;">${navPrice}</strong>.</p>
+                     <p style="font-family: Arial, sans-serif; font-size: 16px;">Do you want to proceed?</p>`,
+        icon: 'warning',
+        customClass: {
+          popup: 'custom-swal',
+          confirmButton: 'custom-confirm-button',
+          cancelButton: 'custom-cancel-button'
+        },
+        showCancelButton: true,
+        confirmButtonColor: '#09070D',
+        cancelButtonColor: '#09070D',
+        confirmButtonText: 'Yes, proceed!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
           $.ajax({
-              url: '/api/transaction/buy',
-              type: 'POST',
-              contentType: 'application/json',
-              data: JSON.stringify({ type: type, amount: amount }),
-              success: function(response) {
-                  console.log('Transaction successful:', response);
-              },
-              error: function(error) {
-                  console.log('Error making transaction:', error);
-              }
+            url: '/api/transaction/buy',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ type: type, amount: amount }),
+            success: function (response) {
+              Swal.fire({
+                title: 'Completed!',
+                text: 'Your transaction has been successful.',
+                icon: 'success',
+                customClass: {
+                  popup: 'custom-success-popup'
+                }
+              });
+            },
+            error: function (error) {
+              Swal.fire({
+                title: 'Failed!',
+                text: 'There was an error with your transaction.',
+                icon: 'error',
+                customClass: {
+                  popup: 'custom-error-popup'
+                }
+              });
+            }
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire({
+            title: 'Cancelled',
+            text: 'Your transaction has been cancelled.',
+            icon: 'error',
+            customClass: {
+              popup: 'custom-error-popup'
+            }
           });
         }
-    </script>
-  </body>
+      });
+    }
+
+    function getCurrentNavPrice() {
+      return 100; // This should be dynamically fetched in a real application
+    }
+  </script>
+</body>
+
 </html>
