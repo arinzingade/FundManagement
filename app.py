@@ -476,4 +476,11 @@ def transaction():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@appFlask.route("/api/latestNav", methods=['GET'])
+def latestNav():
+    latest_doc = fund_info.find_one(sort=[('date', -1)])
+    if not latest_doc:
+        return jsonify({'error': 'No latest NAV found'}), 404
+    latest_nav = latest_doc['nav']
 
+    return jsonify({'latest_nav': latest_nav})

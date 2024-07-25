@@ -335,3 +335,7 @@ a.portfolio {
     font-style: normal;
     font-weight: 10;
 }
+
+.custom-error-popup{
+    background: linear-gradient(to right, #6f1010, #ad1818);
+}

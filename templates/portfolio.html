@@ -76,7 +76,7 @@
         <p class="current_nav"> Current NAV : ₹ {{current_nav}} </p>
         <input type="number" class="amount" id="amount-input" placeholder="Enter Amount in ₹">
         <button class="buy-button" onclick="handleTransactionBuy('BUY')">Buy</button>
-        <button class="sell-button" onclick="handleTransactionSell('SELL')">Sell</button>
+        <button class="sell-button" onclick="handleTransactionBuy('SELL')">Sell</button>
       </div>
     </div>
 
@@ -91,10 +91,30 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-    function handleTransactionBuy(type) {
+      function getCurrentNavPrice() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/api/latestNav',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.latest_nav) {
+                        resolve(data.latest_nav);
+                    } else {
+                        reject('No NAV data received');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching NAV price:', xhr.responseText);
+                    reject(error);
+                }
+            });
+        });
+    }
+    
+    async function handleTransactionBuy(type) {
       var amount = document.getElementById("amount-input").value;
-      var navPrice = getCurrentNavPrice();
-
+      var navPrice = await getCurrentNavPrice();  
       Swal.fire({
         title: 'Confirm Transaction',
         html: `<p style="font-family: Arial, sans-serif; font-size: 16px;">You are about to BUY <strong style="font-family: Arial, sans-serif; font-weight: bold;">${amount} INR</strong> worth of units at a NAV price of <strong style="font-family: Arial, sans-serif; font-weight: bold;">${navPrice}</strong>.</p>
@@ -111,6 +131,7 @@
         confirmButtonText: 'Yes, proceed!',
         cancelButtonText: 'No, cancel!',
         reverseButtons: true
+
       }).then((result) => {
         if (result.isConfirmed) {
           $.ajax({
@@ -152,9 +173,7 @@
       });
     }
 
-    function getCurrentNavPrice() {
-      return 100; // This should be dynamically fetched in a real application
-    }
+
   </script>
 </body>
 
