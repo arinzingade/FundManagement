@@ -334,10 +334,7 @@ from bson import json_util
 def hedgeFund():
     user_account = request.cookies.get('username')
     
-    nav = list(nav_info.find())
-    nav_data_json = json.dumps(nav, default=json_util.default)
-    
-    return render_template("hedgeFund.html", user_account = user_account, nav_data_json = nav_data_json)
+    return render_template("hedgeFund.html", user_account = user_account)
 
 @appFlask.route('/dashboard/Markets')
 def Markets():

@@ -1,3 +1,4 @@
+## Python Version = 3.12.4
 Flask
 pymongo
 bcrypt
@@ -16,3 +17,7 @@ reportLab
 pdfrw
 pyPDF2
 python-dotenv
+psycopg2
+streamlit
+seaborn
+matplotlib
