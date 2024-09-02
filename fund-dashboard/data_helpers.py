@@ -90,7 +90,14 @@ class GetDataFromDatabase():
         pass
 
     def get_drawdown_series():
-        pass
+        cur.execute("SELECT date, drawdowns FROM fund_data ORDER BY date")
+        rows = cur.fetchall()
+
+        drawdowns = []
+        for row in rows:
+            drawdowns.append((row[0], row[1]))
+
+        return drawdowns
 
     def get_ytd_returns():
         pass

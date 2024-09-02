@@ -51,6 +51,5 @@ insert_same_zero_aum()
 ##dd = DrawDowns()
 ##dd.update_data()
 
-
 conn.commit()
 conn.close()

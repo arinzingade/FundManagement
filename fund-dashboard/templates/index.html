@@ -1,58 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily NAV Chart</title>
     <link rel="stylesheet" href="static/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet" />
 </head>
-<body>
-    <div class = "main-container">
-        <div class = "nav">
-            
-        </div>
-        <div class = "test-1">
 
+<body>
+    <div class="main-container">
+        <div class="nav">
+            <div class="nav-chart" id="nav-chart"></div>
         </div>
-        <div class = "test-2">
-            
+        <div class="test-1">
+            <span>Sharpe</span>
+            <span class="sharpe-value">3.29</span>
         </div>
-        <div class = "test-3">
-            
+        <div class="test-2">
+            <span>CAGR</span>
+            <span class="cagr-value">40%</span>
         </div>
-        <div class = "test-4">
-            
+        <div class="test-3"></div>
+        <div class="test-4"></div>
+        <div class="test-5">
+            <span>Alpha</span>
+            <span class="alpha-value">32%</span>
         </div>
-        <div class = "test-5">
-            
+        <div class="test-6">
+            <span>Risk</span>
+            <span class="risk-value">9%</span>
         </div>
-        <div class = "test-6">
-            
+        <div class="test-7"></div>
+        <div class="test-8"></div>
+        <div class="drawdown">
+            <div class="drawdown-chart" id="drawdown-chart"></div>
         </div>
-        <div class = "test-7">
-            
+        <div class="test-10">
+            <span>YTD</span>
+            <span class="risk-value">93%</span>
         </div>
-        <div class = "test-8">
-            
-        </div>
-        <div class = "test-9">
-            
-        </div>
-        <div class = "test-10">
-            
-        </div>
-        <div class = "test-11">
-            
-        </div>
-        <div class = "test-12">
-            
-        </div>
-        <div class = "test-13">
-            
-        </div>
-        <div class = "test-14">
-            
+        <div class="test-11"></div>
+        <div class="test-12"></div>
+        <div class="test-13"></div>
+        <div class="test-14">
+            <span>AUM</span>
+            <span class="risk-value">10 L</span>
         </div>
     </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+async function fetchData(url) {
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    } catch (error) {
+        console.error(`Error fetching data from ${url}:`, error);
+    }
+}
+
+function plotChart(containerId, data, title, yRange, lineColor) {
+    const trace = {
+        x: data.map(d => d.date),
+        y: data.map(d => d.value),
+        mode: 'lines',
+        fill: 'tozeroy',
+        type: 'scatter',
+        name: title,
+        line: { color: lineColor }
+    };
+
+    const layout = {
+        xaxis: {
+            tickfont: { color: '#ffffff' },
+            gridcolor: '#444444',
+            title: 'Date'
+        },
+        yaxis: {
+            tickfont: { color: '#ffffff' },
+            gridcolor: '#444444',
+            range: yRange,
+            title: title
+        },
+        margin: { t: 10, b: 40, l: 40, r: 20 },
+        paper_bgcolor: '#000000',
+        plot_bgcolor: '#000000',
+        showlegend: false,
+        autosize: true
+    };
+
+    const config = { responsive: true };
+
+    Plotly.newPlot(containerId, [trace], layout, config);
+}
+
+async function fetchAndPlotDataSequentially() {
+    try {
+        // Fetch NAV data first
+        const navResponse = await fetchData('http://localhost:5009/api/get_daily_nav');
+        if (navResponse && navResponse['daily_nav']) {
+            const dailyNavData = navResponse['daily_nav'].map(d => ({ date: new Date(d.date), value: +d.nav }));
+            plotChart('nav-chart', dailyNavData, 'NAV', [6.5, 12.5], '#ffa600');
+        }
+
+        // Fetch Drawdown data after NAV data has been fetched
+        const drawdownResponse = await fetchData('http://localhost:5009/api/get_drawdown');
+        if (drawdownResponse && drawdownResponse['drawdown_array']) {
+            const drawdownData = drawdownResponse['drawdown_array'].map(d => ({ date: new Date(d.date), value: +d.drawdown }));
+            plotChart('drawdown-chart', drawdownData, 'Drawdown', [-0.05, 0], '#ff0000');
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+// Run the function
+fetchAndPlotDataSequentially();
+
+    </script>
 </body>
+
 </html>
