@@ -1,5 +1,3 @@
-
-
 body {
     background-color: #101010;
     overflow-x: hidden;
@@ -11,10 +9,10 @@ body {
     height: 96vh;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 7fr 1fr;
-    grid-template-areas: 
-    "nav nav"
-    "sidebar sub-container"
-    "footer sub-container";
+    grid-template-areas:
+        "nav nav"
+        "sidebar sub-container"
+        "footer sub-container";
     grid-gap: 2%;
 }
 
@@ -23,7 +21,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 5%; 
+    padding: 0px 5%;
 }
 
 .sidebar {
@@ -41,7 +39,7 @@ nav {
     font-size: 1.1vw;
     text-decoration: none;
     font-weight: 350;
-   
+
 }
 
 .sidebar a:hover {
@@ -60,7 +58,7 @@ nav {
 
 a.portfolio {
     background: linear-gradient(to left, #272140, #200A43);
-    width:min-content;
+    width: min-content;
     padding: 4% 4%;
     border-radius: 10px;
     font-weight: 550;
@@ -85,7 +83,7 @@ a.portfolio {
 
 }
 
-.footer{
+.footer {
     grid-area: footer;
     display: flex;
     flex-direction: row;
@@ -94,11 +92,22 @@ a.portfolio {
     padding: 0 27%;
 }
 
-.logo, .investment-title, 
-.username, .heading, .balance, .settlement-statement, .nav-statement, 
-.container-headings-1, .container-headings-2, .total-profit, .total-return, .total-invested, .time-stamps-links, .current_nav, 
-    .container-headings-5{
-    
+.logo,
+.investment-title,
+.username,
+.heading,
+.balance,
+.settlement-statement,
+.nav-statement,
+.container-headings-1,
+.container-headings-2,
+.total-profit,
+.total-return,
+.total-invested,
+.time-stamps-links,
+.current_nav,
+.container-headings-5 {
+
     font-family: "Sora", sans-serif;
     font-style: normal;
     color: #dedede;
@@ -111,13 +120,13 @@ a.portfolio {
     display: grid;
     grid-template-rows: 5fr 5fr;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-    "overview overview"
-    "value invested";
+    grid-template-areas:
+        "overview overview"
+        "value invested";
     margin-bottom: 1%;
 }
 
-.overview-container{
+.overview-container {
     grid-area: overview;
     padding-top: 1%;
     padding-left: 1%;
@@ -149,7 +158,7 @@ a.portfolio {
     padding-right: 11%;
 }
 
-.time-stamps{
+.time-stamps {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -171,10 +180,10 @@ a.portfolio {
 
 .time-stamps a:hover {
     transition: 0.4s;
-    background: linear-gradient(to right, #180F3D, #09070D);    
+    background: linear-gradient(to right, #180F3D, #09070D);
 }
 
-.sub-heads{
+.sub-heads {
     font-size: 75%;
     font-weight: 300;
     text-decoration: none;
@@ -185,8 +194,8 @@ a.portfolio {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    grid-template-areas: 
-    "total-invested  total-profit  total-return ";
+    grid-template-areas:
+        "total-invested  total-profit  total-return ";
     grid-gap: 5%;
     margin-left: 2%;
     margin-right: 2%;
@@ -194,31 +203,33 @@ a.portfolio {
 
 
 
-.total-invested{
+.total-invested {
     grid-area: total-invested;
 }
 
 .total-profit {
     grid-area: total-profit;
-   
+
 }
 
-.total-return{
+.total-return {
     grid-area: total-return;
-   
+
 
 }
 
-.total-invested, .total-profit, .total-return{
+.total-invested,
+.total-profit,
+.total-return {
     border-radius: 20px;
     padding-bottom: 5%;
-    background: linear-gradient(to right, #180F3D, #09070D); 
+    background: linear-gradient(to right, #180F3D, #09070D);
     padding: 1% 1%;
     font-weight: 525;
     padding-left: 5%;
     padding-top: 5%;
     padding-bottom: 5%;
-    
+
 }
 
 .container-headings-1 {
@@ -226,7 +237,8 @@ a.portfolio {
     margin-top: -1.3%;
 }
 
-.container-headings-2, .container-headings-5 {
+.container-headings-2,
+.container-headings-5 {
     font-size: 1.5vw;
 }
 
@@ -247,7 +259,10 @@ a.portfolio {
     margin-right: 3%;
 }
 
-.total-profit, .total-return, .total-invested, .time-stamps-links{
+.total-profit,
+.total-return,
+.total-invested,
+.time-stamps-links {
     font-size: 1.5vw;
 }
 
@@ -257,19 +272,22 @@ a.portfolio {
     margin-left: 1.5%;
 }
 
-.amount, .buy-button, .sell-button {
-    width: 100%;  
-    padding: 0.85rem;  
-    margin-bottom: 0.6rem; 
+.amount,
+.buy-button,
+.sell-button {
+    width: 100%;
+    padding: 0.85rem;
+    margin-bottom: 0.6rem;
     box-sizing: border-box;
-    font-size: 1rem;  
-    border-radius: 20px;  
-    border: 2px solid #ccc;  
+    font-size: 1rem;
+    border-radius: 20px;
+    border: 2px solid #ccc;
 }
 
 .amount {
     border-radius: 20px;
-    background: rgb(218, 212, 212);;
+    background: rgb(218, 212, 212);
+    ;
 }
 
 .buy-button {
@@ -297,4 +315,27 @@ a.portfolio {
 
 .sell-button:hover {
     background: linear-gradient(to left, #ad6c6c, #800000);
+}
+
+.swal2-popup {
+
+    background: linear-gradient(to left, #10e69f, #234021);
+    border-radius: 20px;
+    color: white;
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    font-weight: 10;
+}
+
+.custom-swal {
+    background: linear-gradient(to right, #cb8b12, #693737);
+    border-radius: 20px;
+    color: white;
+    font-family: "Sora", sans-serif;
+    font-style: normal;
+    font-weight: 10;
+}
+
+.custom-error-popup{
+    background: linear-gradient(to right, #6f1010, #ad1818);
 }

@@ -1,0 +1,131 @@
+
+body {
+    background-color: rgb(28, 28, 28);
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.main-container {
+    display: grid;
+    height: 96vh;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "nav nav nav test-1 test-2 test-3"
+    "nav nav nav test-1 test-2 test-4"
+    "nav nav nav test-5 test-6 test-7"
+    "nav nav nav test-5 test-6 test-8"
+    "drawdown drawdown drawdown test-11 test-10 test-14"
+    "drawdown drawdown drawdown test-12 test-10 test-14"
+    "drawdown drawdown drawdown test-13 test-13 test-13";
+    grid-gap: 1%;
+}
+
+
+.nav {
+    grid-area: nav;
+    background-color: #000000;
+    border-radius: 12px;
+    position: relative;
+}
+
+.nav-chart, .drawdown-chart {
+    width: 100%;
+    height: 100%; /* Ensures the chart fits the container */
+}
+
+.test-1, .test-2, .test-5, .test-6, .test-10, .test-14 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 5%;
+    font-size: 3.2vw;
+    font-family: "Sora", sans-serif;
+    font-weight: 500;   
+    font-style: normal;
+    text-decoration: none;
+    text-decoration: none;
+    color: #ffa600;
+}
+
+.test-1{
+    grid-area: test-1;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+.test-2{
+    grid-area: test-2;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+.test-3{
+    grid-area: test-3;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+.test-4{
+    grid-area: test-4;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+.test-5{
+    grid-area: test-5;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-6{
+    grid-area: test-6;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-7{
+    grid-area: test-7;
+    background-color: rgb(3, 2, 0);
+    border-radius: 12px;
+}
+.test-8{
+    grid-area: test-8;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.drawdown{
+    grid-area: drawdown;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-10{
+    grid-area: test-10;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-11{
+    grid-area: test-11;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-12{
+    grid-area: test-12;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-13{
+    grid-area: test-13;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+.test-14{
+    grid-area: test-14;
+    background-color: rgb(0, 0, 0);
+    border-radius: 12px;
+}
+
+.sharpe-value, .cagr-value, .alpha-value, .risk-value {
+    font-size: 5vw;
+    font-weight: 400;
+    color: #b6a6d2;
+}
+

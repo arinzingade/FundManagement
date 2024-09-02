@@ -1,4 +1,39 @@
 
-.main-body{
-    background-color: bisque;
+body {
+    background-color: #D9D9D9;
+}
+
+.container-1{
+    display: grid;
+    height: 75vh;
+    grid-template-rows: 1.5fr 6fr;
+    grid-template-areas: 
+    "nav"
+    "tagline";
+    grid-gap: 2%;
+}
+
+.nav {
+    grid-area: nav;
+    background-color:  #D9D9D9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Libre Caslon Text", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.tagline{
+    grid-area: tagline;
+    background-color: beige;
+}
+
+.discover {
+    grid-area: discover;
+    background-color: blueviolet;
+}
+
+.logo {
+    font-size: 2rem;
 }

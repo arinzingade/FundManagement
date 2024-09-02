@@ -1,1 +1,3 @@
 .env
+fund-dashboard/postExcel.csv
+fund-dashboard/import_data.py
