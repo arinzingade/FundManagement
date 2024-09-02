@@ -14,7 +14,6 @@ import logging
 
 from forms import SignupForm, LoginForm, AdminForm, PanelForm, TransactionForm, navForm, settleForm, BondForm
 from functions import AveragePrice, UpdateNAVdata, NumberConv, TotalInvested, BondMaths
-from charts import LineCharts
 from config import Config
 
 # Flask App
