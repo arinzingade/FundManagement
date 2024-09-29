@@ -3,6 +3,9 @@ import numpy as np
 from decimal import Decimal
 import os
 from dotenv import load_dotenv
+from datetime import datetime
+import yfinance as yf
+import pandas as pd
 
 load_dotenv()
 
@@ -102,24 +105,139 @@ class GetDataFromDatabase():
     def get_ytd_returns():
         pass
 
+    def get_alltime_return():
+        cur.execute("SELECT date, nav FROM fund_data ORDER BY date")
+        rows = cur.fetchall()
+
+        length = len(rows)
+        last_nav = rows[length - 1][1]
+        first_nav = 7
+
+        alltime_ret = (last_nav - first_nav) / first_nav
+        return [alltime_ret*100, last_nav]
+
     def get_daily_win_pct():
-        pass
+        cur.execute("SELECT date, precise_pct FROM fund_data ORDER BY date")
+        rows = cur.fetchall()
 
-    def get_daily_loss_pct():
-        pass
+        length = len(rows)
+        num_pos = 0
+        zeros = 0
+        for row in rows:
+            if (row[1] > 0):
+                num_pos += 1
+            if (row[1] == 0):
+                zeros += 1
 
-    def total_jouney():
-        pass
+        real_days = length - zeros
+        num_negs = real_days - num_pos
+        return [num_pos / real_days, num_negs / real_days, real_days]
+    
+    def get_alpha():
+        nifty_series = yf.download("^NSEI", start = "2023-03-01", end = "2024-08-10")['Adj Close']
+        full_date_range = pd.date_range(start=nifty_series.index.min(), end=nifty_series.index.max(), freq='D') 
+        series_reindexed = nifty_series.reindex(full_date_range)
+        series_filled = series_reindexed.bfill()
 
-    def current_nav():
-        pass
+        nifty_pct = []
+        for i in range(365, len(series_filled)):
+            pct = (series_filled.iloc[i] - series_filled.iloc[i-365]) / series_filled.iloc[i-365]
+            nifty_pct.append(float(pct))
 
+        cur.execute("SELECT date, nav FROM fund_data ORDER BY date")
+        rows = cur.fetchall()
 
-class GetRatios():
+        nav_list = []
+        for row in rows:
+            nav_list.append(row[1])
+        
+        nav_pct = []
+        for i in range(365, len(nav_list)):
+            pct = (nav_list[i] - nav_list[i-365]) / nav_list[i-365]
+            nav_pct.append(float(pct))
+        
+        alpha = []
+        for i in range(len(nav_pct)):
+            alpha.append(nav_pct[i] - nifty_pct[i])
+
+        last = len(alpha) - 1
+
+        risk_free = 0.07
+        daily_nav_pct =  HelperFunctions.daily_returns(nav_list)
+        daily_nifty_pct = HelperFunctions.daily_returns(series_filled)
+        annualised_vol = HelperFunctions.vol_calculation(daily_nav_pct)
+        annualised_return = HelperFunctions.annualised_returns(daily_nav_pct)
+        cagr = HelperFunctions.cagr(nav_list)
+        sharpe = (cagr - risk_free)/annualised_vol
+        beta = HelperFunctions.linalg(daily_nav_pct, daily_nifty_pct)
+
+        return (alpha[last], annualised_vol, cagr, sharpe, beta)
+
+class HelperFunctions():
 
     def __init__():
         pass
 
+    def vol_calculation(arr):
+        daily_vol = np.std(arr)
+        annualised_vol = float(daily_vol) * np.sqrt(252)
+
+        return annualised_vol
+
+    def daily_returns(arr):
+
+        arr = np.array(arr)
+        res = [0]
+        length = len(arr)
+        for i in range(1, length):
+            pct = (arr[i] - arr[i-1])/arr[i-1]
+            res.append(pct)
+        return res
+    
+    def annualised_returns(daily_returns):
+        daily_returns = np.array(daily_returns, dtype=float)
+        cum_returns = np.prod(1 + daily_returns) - 1
+        annualised_return = (1 + float(cum_returns)) ** (252 / len(daily_returns)) - 1
+
+        return annualised_return
+
+    def cagr(nav_list):
+        first_value = float(7)
+        last_value = float(nav_list[-1])
+        print(last_value)
+
+        start_date = datetime.strptime("2023-03-01", "%Y-%m-%d")
+        end_date = datetime.now()
+
+        days = (end_date - start_date).days
+
+        print("Days: ", days)
+        years = float(days / 365)
+
+        print("Years: ", years)
+        cagr_value = ((last_value / first_value) ** (1 / years)) - 1
+
+        return cagr_value
+
+    def correlation(x, y):
+        x = np.array(x, dtype = float)
+        y = np.array(y, dtype = float)
+
+        mean_x = float(np.mean(x))
+        mean_y = float(np.mean(y))
+        p = (x - mean_x)
+        q = (y - mean_y)
+
+        return np.sum(p*q)/np.sqrt(np.sum(p**2)*np.sum(q**2))
+    
+    def linalg(x, y):
+        
+        r = -HelperFunctions.correlation(x, y)
+        sx = float(np.std(x))
+        sy = float(np.std(y))
+        b = r*sy/sx
+        
+        return b
 
 if __name__ == "__main__":
-    GetDataFromDatabase.get_daily_nav()
+    GetDataFromDatabase.get_alpha()
