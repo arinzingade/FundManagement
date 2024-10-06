@@ -53,6 +53,11 @@ async def get_ratios():
         "time_taken": str(time_taken)
     })
 
+@app.route("/api/put_pnl", methods = ['POST'])
+async def put_pnl():
+    pass
+
+
 if __name__ == "__main__":
     from hypercorn.asyncio import serve
     from hypercorn.config import Config

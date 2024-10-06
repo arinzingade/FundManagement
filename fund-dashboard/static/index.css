@@ -52,6 +52,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items:start;
     padding-left: 5%;
     font-size: 2vw;
     font-family: "Sora", sans-serif;
@@ -142,12 +143,12 @@ body {
 }
 
 .win-value {
-    font-size: 2.1vw;
+    font-size: 2.6vw;
     color: #ff00d4;
 }
 
 .win-font {
-    font-size: 2.1vw;
+    font-size: 2.2vw;
 }
 
 .warning {
