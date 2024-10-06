@@ -7,12 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-conn = psycopg2.connect(os.getenv("DATABASE_URL"))
-cur = conn.cursor()
-
-SET_SAME_NAV = cur.execute("UPDATE fund_data SET percentage = 0 WHERE percentage IS NULL;")
-
-
 def insert_same_zero_nav():
     correct_nav = []
     cur.execute("SELECT date, nav FROM fund_data ORDER BY date")
@@ -75,9 +69,17 @@ def making_pct_more_precise():
         cur.execute("UPDATE fund_data SET precise_pct = %s WHERE date = %s", (pct_series[i], id_series[i]))
 
 
-#insert_same_zero_aum()
-#insert_same_zero_nav()
-making_pct_more_precise()
 
-conn.commit()
-conn.close()
+if __name__ == "__main__":
+    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+    cur = conn.cursor()
+
+    SET_SAME_NAV = cur.execute("UPDATE fund_data SET percentage = 0 WHERE percentage IS NULL;")
+
+    insert_same_zero_aum()
+    insert_same_zero_nav()
+    making_pct_more_precise()
+
+    conn.commit()
+    cur.close()
+    conn.close()

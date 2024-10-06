@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-conn = psycopg2.connect(os.getenv("DATABASE_URL"))
-cur = conn.cursor()
-
 def extract_nav_from_fund_data():
     cur.execute("""UPDATE weekly_data
     SET start_nav = subquery.nav
@@ -53,6 +50,10 @@ def updating_percentage():
         cur.execute("UPDATE weekly_data SET percentage = %s WHERE week_start = %s", (pct_weekly, date))
 
 if __name__ == "__main__":
+
+    conn = psycopg2.connect(os.getenv("DATABASE_URL"))
+    cur = conn.cursor()
+
     conn.commit()
     cur.close()
     conn.close()
